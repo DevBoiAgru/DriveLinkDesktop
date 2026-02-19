@@ -1,0 +1,18 @@
+BasedOnStyle: WebKit
+BreakBeforeBraces: Attach
+AlignAfterOpenBracket: BlockIndent
+
+UseTab: Never
+IndentWidth: 4
+TabWidth: 4
+
+PointerAlignment: Left
+
+NamespaceIndentation: None
+FixNamespaceComments: true
+SpaceBeforeParens: ControlStatements
+SpacesInParentheses: false
+SpacesInContainerLiterals: false
+
+SortIncludes: true
+IncludeBlocks: Regroup
