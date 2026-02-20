@@ -1,41 +1,59 @@
 #include <imgui.h>
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_sdlrenderer3.h>
+#define SDL_MAIN_USE_CALLBACKS 1 /* use the callbacks instead of main() */
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_main.h>
 #include <stdio.h>
 
-int main(int argc, char* argv[]) {
+typedef struct {
+    SDL_Window* window;
+    SDL_Renderer* renderer;
 
-    // Defaults
-    int WINDOW_WIDTH = 850;
-    int WINDOW_HEIGHT = 550;
+    uint16_t windowHeight;
+    uint16_t windowWidth;
+
+    int someCounter;
+} AppState;
+
+/* This function runs once at startup. */
+SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[]) {
+
+    // App state creation
+    *appstate = new AppState {};
+    AppState& state = *static_cast<AppState*>(*appstate);
+
+    state.windowWidth = 550;
+    state.windowHeight = 350;
 
     // SDL Setup
     if (!SDL_Init(SDL_INIT_VIDEO)) {
         printf("Error: SDL_Init(): %s\n", SDL_GetError());
-        return 1;
+        return SDL_APP_FAILURE;
     }
 
     // Create window with SDL_Renderer graphics context
     float main_scale = SDL_GetDisplayContentScale(SDL_GetPrimaryDisplay());
     SDL_WindowFlags window_flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY;
-    SDL_Window* window = SDL_CreateWindow("DriveLink", (int)(WINDOW_WIDTH * main_scale), (int)(WINDOW_HEIGHT * main_scale), window_flags);
+    SDL_Window* window = SDL_CreateWindow("DriveLink", (int)(state.windowWidth * main_scale), (int)(state.windowHeight * main_scale), window_flags);
     if (window == nullptr) {
         printf("Error: SDL_CreateWindow(): %s\n", SDL_GetError());
-        return 1;
+        return SDL_APP_FAILURE;
     }
+    state.window = window;
     SDL_Renderer* renderer = SDL_CreateRenderer(window, nullptr);
     SDL_SetRenderVSync(renderer, 1);
     if (renderer == nullptr) {
         SDL_Log("Error: SDL_CreateRenderer(): %s\n", SDL_GetError());
-        return 1;
+        return SDL_APP_FAILURE;
     }
+    state.renderer = renderer;
     SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
+    static ImGuiIO& io = ImGui::GetIO();
     (void)io;
     io.IniFilename = NULL;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
@@ -49,7 +67,7 @@ int main(int argc, char* argv[]) {
     ImGui::StyleColorsDark();
     auto& c = ImGui::GetStyle().Colors;
 
-    c[ImGuiCol_WindowBg] = { 0.16f, 0.16f, 0.16f, 1.0f };
+    c[ImGuiCol_WindowBg] = { 0.0f, 0.0f, 0.0f, 0.0f }; // Transparent windows to prevent overlay over things drawn with SDL
     c[ImGuiCol_FrameBg] = { 0.18f, 0.18f, 0.18f, 1.0f };
     c[ImGuiCol_Button] = { 0.20f, 0.20f, 0.20f, 1.0f };
     c[ImGuiCol_ButtonActive] = { 0.30f, 0.30f, 0.30f, 1.0f };
@@ -62,87 +80,118 @@ int main(int argc, char* argv[]) {
     ImGui_ImplSDL3_InitForSDLRenderer(window, renderer);
     ImGui_ImplSDLRenderer3_Init(renderer);
 
-    // App state
-    bool resizable = false;
-    uint8_t someCounter = 0;
-    ImVec4 clear_color = ImVec4(0.26f, 0.26f, 0.26f, 1.00f);
+    return SDL_APP_CONTINUE;
+}
 
-    // Main loop
-    bool RUNNING = true;
-    while (RUNNING) {
-        SDL_Event event;
-        while (SDL_PollEvent(&event)) {
-            ImGui_ImplSDL3_ProcessEvent(&event);
-            switch (event.type) {
-            case SDL_EVENT_QUIT:
-                RUNNING = false;
-                break;
-            case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
-                if (event.window.windowID == SDL_GetWindowID(window))
-                    RUNNING = false;
-                break;
-            case SDL_EVENT_WINDOW_RESIZED:
-                WINDOW_WIDTH = event.window.data1;
-                WINDOW_HEIGHT = event.window.data2;
-                printf("%dx%d\n", event.window.data1, event.window.data2);
-                break;
-            }
+/* This function runs when a new event (mouse input, keypresses, etc) occurs. */
+SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event) {
+    AppState& state = *static_cast<AppState*>(appstate);
+
+    ImGui_ImplSDL3_ProcessEvent(event);
+    switch (event->type) {
+    case SDL_EVENT_QUIT:
+        return SDL_APP_SUCCESS;
+        break;
+
+    case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
+        if (event->window.windowID == SDL_GetWindowID(state.window))
+            return SDL_APP_SUCCESS;
+        break;
+
+    case SDL_EVENT_WINDOW_RESIZED:
+        state.windowWidth = event->window.data1;
+        state.windowHeight = event->window.data2;
+        break;
+
+    case SDL_EVENT_KEY_DOWN:
 
 #ifdef _DEBUG
-            // Quit when pressing Q while debugging to prevent reaching for the close button all the time
-            if (event.type == SDL_EVENT_KEY_DOWN && event.key.scancode == SDL_SCANCODE_Q)
-                RUNNING = false;
+        // Quit when pressing Q while debugging to prevent reaching for the close button all the time
+        if (event->key.scancode == SDL_SCANCODE_Q)
+            return SDL_APP_SUCCESS;
 
-            // Do something on pressing a key, can do any arbitrary thing on arbitrary key
-            if (event.type == SDL_EVENT_KEY_DOWN && event.key.scancode == SDL_SCANCODE_E) {
-                resizable = !resizable;
-                printf("%s\n", resizable ? "yes" : "no");
-            }
+        // Do something on pressing a key, can do any arbitrary thing on arbitrary key
+        if (event->key.scancode == SDL_SCANCODE_E) {
+        }
 #endif
-        }
-
-        // Start the Dear ImGui frame
-        ImGui_ImplSDLRenderer3_NewFrame();
-        ImGui_ImplSDL3_NewFrame();
-        ImGui::NewFrame();
-
-        // The main window
-        ImGui::Begin(
-            "DriveLink",
-            NULL,
-            (resizable ? 0 : ImGuiWindowFlags_NoResize)
-                | ImGuiWindowFlags_NoTitleBar
-                | ImGuiWindowFlags_NoMove
-                | ImGuiWindowFlags_NoCollapse
-                | ImGuiWindowFlags_UnsavedDocument
-        );
-
-        ImGui::BeginChild("LeftPanel", { 200, 200 }, 0);
-        if (ImGui::Button("Click Me!")) {
-            someCounter++;
-        }
-        ImGui::Text("You have hello the world %d times!", someCounter);
-        ImGui::EndChild();
-
-        ImGui::End();
-
-        // Rendering
-        ImGui::Render();
-        SDL_SetRenderScale(renderer, io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
-        SDL_SetRenderDrawColorFloat(renderer, clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-        SDL_RenderClear(renderer);
-        ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), renderer);
-        SDL_RenderPresent(renderer);
+        break;
     }
+
+    if (event->type == SDL_EVENT_QUIT) {
+        return SDL_APP_SUCCESS; /* end the program, reporting success to the OS. */
+    }
+    return SDL_APP_CONTINUE; /* carry on with the program! */
+}
+
+/* This function runs once per frame*/
+SDL_AppResult SDL_AppIterate(void* appstate) {
+
+    ImGuiIO& io = ImGui::GetIO();
+    uint64_t now = SDL_GetTicks();
+    AppState& state = *static_cast<AppState*>(appstate);
+
+    // Clear screen
+    SDL_SetRenderDrawColorFloat(state.renderer, 0.2f, 0.2f, 0.2f, 1.f);
+    SDL_RenderClear(state.renderer);
+
+    // Normal SDL Rendering
+    auto crcl = SDL_FRect();
+    crcl.h = 100.f;
+    crcl.w = 100.f;
+    crcl.x = 100.f;
+    crcl.y = 100.f;
+    SDL_SetRenderDrawColor(state.renderer, 250, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderFillRect(state.renderer, &crcl);
+
+    // Start ImGui rendering
+    ImGui_ImplSDLRenderer3_NewFrame();
+    ImGui_ImplSDL3_NewFrame();
+    ImGui::NewFrame();
+
+    // ImGui window
+    ImGui::SetNextWindowSize({ io.DisplaySize.x, io.DisplaySize.y }, ImGuiCond_Once);
+    ImGui::SetNextWindowPos({ 0, 0 });
+    ImGui::Begin(
+        "DriveLink",
+        NULL,
+        ImGuiWindowFlags_NoTitleBar
+            | ImGuiWindowFlags_NoResize
+            | ImGuiWindowFlags_NoMove
+            | ImGuiWindowFlags_MenuBar
+            | ImGuiWindowFlags_NoCollapse
+            | ImGuiWindowFlags_UnsavedDocument
+    );
+
+    ImGui::BeginChild(
+        "LeftPanel", { 300 * (1 + SDL_sinf(now / 300)), 200 * (1 + SDL_cosf(now / 200)) },
+        ImGuiChildFlags_Border
+    );
+    if (ImGui::Button("Click Me!")) {
+        state.someCounter++;
+    }
+    ImGui::Text("You have hello the world %d times!", state.someCounter);
+    ImGui::EndChild();
+
+    ImGui::End();
+
+    // Rendering
+    ImGui::Render();
+    SDL_SetRenderScale(state.renderer, io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
+    ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), state.renderer);
+
+    SDL_RenderPresent(state.renderer);
+    return SDL_APP_CONTINUE;
+}
+
+void SDL_AppQuit(void* appstate, SDL_AppResult result) {
+    AppState& state = *static_cast<AppState*>(appstate);
 
     // Cleanup
     ImGui_ImplSDLRenderer3_Shutdown();
     ImGui_ImplSDL3_Shutdown();
     ImGui::DestroyContext();
 
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(state.renderer);
+    SDL_DestroyWindow(state.window);
     SDL_Quit();
-
-    return 0;
 }
