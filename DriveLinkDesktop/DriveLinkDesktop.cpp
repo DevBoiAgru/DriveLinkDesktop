@@ -2,6 +2,9 @@
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_sdlrenderer3.h>
 #define SDL_MAIN_USE_CALLBACKS 1 /* use the callbacks instead of main() */
+#include "InputState.hpp"
+#include "Server.hpp"
+
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <stdio.h>
@@ -80,6 +83,20 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[]) {
     ImGui_ImplSDL3_InitForSDLRenderer(window, renderer);
     ImGui_ImplSDLRenderer3_Init(renderer);
 
+    // Initialise sockpp
+    sockpp::initialize();
+
+    // Initialise and start the UDP input event listener
+    static dl::network::InputListener inputServer = dl::network::InputListener(
+        sockpp::inet_address(
+            "0.0.0.0", 7001
+        )
+    );
+    inputServer.Start();
+
+    // Initialise the Input State singleton
+    dl::InputState::GetInstance();
+
     return SDL_APP_CONTINUE;
 }
 
@@ -135,13 +152,9 @@ SDL_AppResult SDL_AppIterate(void* appstate) {
     SDL_RenderClear(state.renderer);
 
     // Normal SDL Rendering
-    auto crcl = SDL_FRect();
-    crcl.h = 100.f;
-    crcl.w = 100.f;
-    crcl.x = 100.f;
-    crcl.y = 100.f;
-    SDL_SetRenderDrawColor(state.renderer, 250, 0, 0, SDL_ALPHA_OPAQUE);
-    SDL_RenderFillRect(state.renderer, &crcl);
+    /*
+        SDL Rendering here...
+    */
 
     // Start ImGui rendering
     ImGui_ImplSDLRenderer3_NewFrame();
@@ -157,19 +170,16 @@ SDL_AppResult SDL_AppIterate(void* appstate) {
         ImGuiWindowFlags_NoTitleBar
             | ImGuiWindowFlags_NoResize
             | ImGuiWindowFlags_NoMove
-            | ImGuiWindowFlags_MenuBar
             | ImGuiWindowFlags_NoCollapse
-            | ImGuiWindowFlags_UnsavedDocument
     );
 
     ImGui::BeginChild(
-        "LeftPanel", { 300 * (1 + SDL_sinf(now / 300)), 200 * (1 + SDL_cosf(now / 200)) },
+        "LeftPanel", { 300, 200 },
         ImGuiChildFlags_Border
     );
-    if (ImGui::Button("Click Me!")) {
-        state.someCounter++;
-    }
-    ImGui::Text("You have hello the world %d times!", state.someCounter);
+
+    ImGui::Text("Steering: %f", dl::InputState::GetInstance().getSteering());
+
     ImGui::EndChild();
 
     ImGui::End();
