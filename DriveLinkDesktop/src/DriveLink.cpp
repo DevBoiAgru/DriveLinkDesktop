@@ -1,7 +1,6 @@
 #include "DriveLink.hpp"
 
 int main() {
-
     sf::RenderWindow window(
         sf::VideoMode({ dl::consts::IMAGE_W, dl::consts::IMAGE_H }), "DriveLink",
         sf::Style::None
@@ -37,12 +36,10 @@ int main() {
     std::vector<std::unique_ptr<dl::ui::Component>> uiComponents;
 
     // Close button
-    sf::FloatRect closeBtnRect({ 100.0, 100.0 }, { 100.0, 100.0 });
+    sf::FloatRect closeBtnRect({ dl::consts::IMAGE_W - dl::consts::TITLEBAR_HEIGHT, 0 }, { dl::consts::TITLEBAR_HEIGHT, dl::consts::TITLEBAR_HEIGHT });
     uiComponents.push_back(
         std::make_unique<dl::ui::Button>(
-            closeBtnRect, []() {
-                std::cout << "Close button clocked";
-            }
+            closeBtnRect
         )
     );
 
@@ -52,7 +49,6 @@ int main() {
     inputListener.Start();
 
     dl::ui::UIState uiState;
-
     // App loop
     while (window.isOpen()) {
         // Process events
@@ -70,7 +66,7 @@ int main() {
 
             if (const sf::Event::Resized* resized = event->getIf<sf::Event::Resized>()) {
                 // Manage window size
-                dl::enforceAspectRatio(window, resized->size.x, resized->size.x);
+                dl::enforceAspectRatio(window, resized->size.x, resized->size.y);
 
                 // Update background gradient
                 bgGradientShader.setUniform(
@@ -103,6 +99,8 @@ int main() {
 
             component->update(uiState);
         }
+
+        window.display();
         uiState.previouslyLeftDown = uiState.isLeftClickDown;
         uiState.previouslyRightDown = uiState.isRightClickDown;
     }
