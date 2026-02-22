@@ -10,7 +10,7 @@ struct {
     float brake;
     float clutch;
     long long int timestamp;
-    unsigned buttons;
+    uint32_t buttons;
 } InputData;
 
 class InputState {
