@@ -15,22 +15,42 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DriveLinkDesktop.cpp">
+    <ClCompile Include="src\network\Server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Server.cpp">
+    <ClCompile Include="src\DriveLink.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Server.hpp">
+    <ClInclude Include="include\InputState.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InputState.hpp">
+    <ClInclude Include="include\network\Protocols.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Protocols.hpp">
+    <ClInclude Include="include\network\Server.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\DriveLink.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\utility\Logger.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ui\button.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ui\component.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\UI_Steering.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\Gradient.frag" />
   </ItemGroup>
 </Project>

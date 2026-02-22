@@ -1,23 +1,34 @@
-#include "Server.hpp"
+#include <iostream>
+#include <network/Server.hpp>
 
 namespace dl {
 namespace network {
 
 void InputListener::Start() {
-    if (!m_sock.bind(m_addr)) {
+
+    auto res = m_socket.bind(
+        m_port,
+        sf::IpAddress::resolve("0.0.0.0").value()
+    );
+
+    switch (res) {
+    case sf::Socket::Status::Error:
         std::cerr << "Error binding the UDP socket." << std::endl;
-        return;
     }
-    m_running = true;
+
+    m_running.store(true);
 
     m_thr = std::thread([this]() {
         listen();
     });
-    m_thr.detach();
 }
 
 void InputListener::listen() {
-    char buff[30];
+    char buff[100];
+    std::size_t recieved;
+    std::optional<sf::IpAddress> sender;
+    unsigned short remotePort;
+
     unsigned char version;
     float val_steering;
     float val_throttle;
@@ -26,11 +37,15 @@ void InputListener::listen() {
     long long int val_timestamp;
     uint32_t val_buttons;
 
-    while (m_running) {
-        std::cout << "Listening";
-        size_t read = m_sock.recv(buff, sizeof(buff));
+    while (m_running.load()) {
 
-        if (read < 1) {
+        if (m_socket.receive(buff, sizeof(buff), recieved, sender, remotePort) != sf::Socket::Status::Done) {
+            // Try again on next packet
+            std::cerr << "Error recving packet." << std::endl;
+            continue;
+        }
+
+        if (recieved < 1) {
             // Packet doesn't even have the version? Try the next one
             std::cerr << "Error recving packet." << std::endl;
             continue;
@@ -40,7 +55,7 @@ void InputListener::listen() {
         memcpy(&version, buff, sizeof(char));
 
         // Verify payload sizes based on versions
-        if (version == 1 && read != 29) {
+        if (version == 1 && recieved != 29) {
             // Skip packet, enough data didn't arrive
             continue;
         }
@@ -63,12 +78,15 @@ void InputListener::listen() {
             dl::InputState::GetInstance().setBrake(val_brake);
             dl::InputState::GetInstance().setClutch(val_clutch);
             dl::InputState::GetInstance().setButtons(val_buttons);
+
+            printf("Steering: %f\n", val_steering);
         }
     }
 }
 
 void InputListener::Stop() {
-    m_running = false;
+    m_socket.unbind();
+    m_running.store(false);
     m_thr.join();
 }
 

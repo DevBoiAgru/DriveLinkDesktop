@@ -18,6 +18,25 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\DriveLink.cpp" />
+    <ClCompile Include="src\network\Server.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\DriveLink.hpp" />
+    <ClInclude Include="include\InputState.hpp" />
+    <ClInclude Include="include\network\Protocols.hpp" />
+    <ClInclude Include="include\network\Server.hpp" />
+    <ClInclude Include="include\ui\button.hpp" />
+    <ClInclude Include="include\ui\component.hpp" />
+    <ClInclude Include="include\utility\Logger.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\UI_Steering.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\Gradient.frag" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -108,6 +127,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,6 +144,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,15 +152,6 @@
       <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="DriveLinkDesktop.cpp" />
-    <ClCompile Include="Server.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="InputState.hpp" />
-    <ClInclude Include="Protocols.hpp" />
-    <ClInclude Include="Server.hpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

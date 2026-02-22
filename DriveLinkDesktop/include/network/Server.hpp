@@ -4,7 +4,7 @@
 #include "Protocols.hpp"
 
 #include <atomic>
-#include <sockpp/udp_socket.h>
+#include <SFML/Network/UdpSocket.hpp>
 #include <thread>
 #include <variant>
 
@@ -13,8 +13,8 @@ namespace network {
 
 class InputListener {
 public:
-    InputListener(sockpp::inet_address addr)
-        : m_addr(addr) { };
+    InputListener(int port)
+        : m_port(port) { };
 
     /*
         Run the listener binded on the address provided.
@@ -24,9 +24,9 @@ public:
     void Stop();
 
 private:
+    int m_port;
     std::thread m_thr;
-    sockpp::inet_address m_addr;
-    sockpp::udp_socket m_sock;
+    sf::UdpSocket m_socket;
     std::atomic<bool> m_running;
 
     void listen();
