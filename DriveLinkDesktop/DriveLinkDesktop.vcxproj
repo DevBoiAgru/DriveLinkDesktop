@@ -21,21 +21,30 @@
   <ItemGroup>
     <ClCompile Include="src\DriveLink.cpp" />
     <ClCompile Include="src\network\Server.cpp" />
+    <ClCompile Include="src\platform\platform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\DriveLink.hpp" />
     <ClInclude Include="include\InputState.hpp" />
     <ClInclude Include="include\network\Protocols.hpp" />
     <ClInclude Include="include\network\Server.hpp" />
+    <ClInclude Include="include\platform\platform.hpp" />
     <ClInclude Include="include\ui\button.hpp" />
     <ClInclude Include="include\ui\component.hpp" />
+    <ClInclude Include="include\ui\cross.hpp" />
+    <ClInclude Include="include\ui\text.hpp" />
     <ClInclude Include="include\utility\Logger.hpp" />
+    <ClInclude Include="include\utility\Utils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\UI_Steering.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\Gradient.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\OpenSans-Regular.ttf" />
+    <Font Include="assets\fonts\OpenSans-SemiBold.ttf" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>

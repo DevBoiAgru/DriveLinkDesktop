@@ -77,9 +77,8 @@ void InputListener::listen() {
             dl::InputState::GetInstance().setThrottle(val_throttle);
             dl::InputState::GetInstance().setBrake(val_brake);
             dl::InputState::GetInstance().setClutch(val_clutch);
+            dl::InputState::GetInstance().setTimestamp(val_timestamp);
             dl::InputState::GetInstance().setButtons(val_buttons);
-
-            printf("Steering: %f\n", val_steering);
         }
     }
 }

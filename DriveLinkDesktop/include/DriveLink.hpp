@@ -2,9 +2,13 @@
 
 #include "InputState.hpp"
 #include "network/Server.hpp"
+#include "platform/platform.hpp"
 #include "ui/button.hpp"
+#include "ui/cross.hpp"
+#include "ui/text.hpp"
 
 #include <iostream>
+#include <memory>
 #include <SFML/Graphics.hpp>
 
 namespace dl {
@@ -13,6 +17,7 @@ namespace consts {
 
 constexpr unsigned int IMAGE_W = 970;
 constexpr unsigned int IMAGE_H = 560;
+constexpr unsigned int FPS_LIMIT = 30;
 constexpr float aspect_ratio = float(IMAGE_W) / IMAGE_H;
 
 constexpr float TITLEBAR_HEIGHT = 45;

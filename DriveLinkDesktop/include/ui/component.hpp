@@ -7,34 +7,34 @@ namespace ui {
 
 struct UIState {
     sf::Vector2f mousePosition;
-    bool isLeftClickDown; // Down is state
-    bool isRightClickDown;
+    bool isLeftClickDown = false; // Down is state (Continous)
+    bool isRightClickDown = false;
 
-    bool isLeftClickPressed; // Pressed and Released are events (One frame only)
-    bool isLeftClickReleased;
+    bool isLeftClickPressed = false; // Pressed and Released are events (One frame only)
+    bool isLeftClickReleased = false;
 
-    bool isRightClickPressed;
-    bool isRightClickReleased;
+    bool isRightClickPressed = false;
+    bool isRightClickReleased = false;
 
-    bool previouslyLeftDown;
-    bool previouslyRightDown;
+    bool previouslyLeftDown = false;
+    bool previouslyRightDown = false;
 };
 
 class Component {
 public:
+    Component() { }
+
     Component(sf::FloatRect area)
         : m_area(area) {
         m_shape = sf::RectangleShape({ area.size.x, area.size.y });
         m_shape.setPosition(area.position);
     }
 
-    void render(sf::RenderWindow& window) {
+    virtual void render(sf::RenderWindow& window) {
         window.draw(m_shape);
     }
 
-    virtual void update(UIState& state) {
-        m_hovered = m_area.contains({ state.mousePosition.x, state.mousePosition.y });
-    };
+    virtual void update(UIState& state) { };
 
     virtual ~Component() = default;
 

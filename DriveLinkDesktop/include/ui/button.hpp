@@ -3,7 +3,6 @@
 #include "component.hpp"
 
 #include <functional>
-#include <iostream>
 #include <SFML/Graphics.hpp>
 
 namespace dl {
@@ -13,7 +12,7 @@ class Button : public Component {
 public:
     Button(
         sf::FloatRect area,
-        sf::Color normalColor = { 250, 0, 0 }, sf::Color hoveredColor = { 0, 250, 0 }, sf::Color activeColor = { 0, 0, 250 },
+        sf::Color normalColor = { 250, 0, 0, 255 }, sf::Color hoveredColor = { 0, 250, 0, 255 }, sf::Color activeColor = { 0, 0, 250, 255 },
         std::function<void()> onClick = []() { /* Does nothing by default */ },
         std::function<void()> onRelease = []() { /* Does nothing by default */ },
         std::function<void()> onHoverEnd = []() { /* Does nothing by default */ },

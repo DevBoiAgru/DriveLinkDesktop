@@ -9,6 +9,9 @@ This component does the following:
 	- Listen for the input events from the phone using a UDP socket
 	- Send the input events recieved through a vJoy virtual device
 
+## Planned features
+- Movable and resizable window
+
 ## Dependencies and installation:
 You need the following components to build this app (Installed through vcpkg):
 - SDL3

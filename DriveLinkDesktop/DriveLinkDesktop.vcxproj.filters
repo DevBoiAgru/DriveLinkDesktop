@@ -21,6 +21,9 @@
     <ClCompile Include="src\DriveLink.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\platform\platform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\InputState.hpp">
@@ -44,6 +47,18 @@
     <ClInclude Include="include\ui\component.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\ui\cross.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ui\text.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\utility\Utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\platform\platform.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\UI_Steering.png">
@@ -52,5 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\Gradient.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\OpenSans-SemiBold.ttf" />
+    <Font Include="assets\fonts\OpenSans-Regular.ttf" />
   </ItemGroup>
 </Project>
