@@ -1,8 +1,15 @@
+#include "dl/core/Server.hpp"
+
+#include "dl/platform/Platform.hpp"
+
 #include <iostream>
-#include <network/Server.hpp>
 
 namespace dl {
 namespace network {
+
+InputListener::~InputListener() {
+    Stop();
+}
 
 void InputListener::Start() {
 
@@ -41,13 +48,11 @@ void InputListener::listen() {
 
         if (m_socket.receive(buff, sizeof(buff), recieved, sender, remotePort) != sf::Socket::Status::Done) {
             // Try again on next packet
-            std::cerr << "Error recving packet." << std::endl;
             continue;
         }
 
         if (recieved < 1) {
-            // Packet doesn't even have the version? Try the next one
-            std::cerr << "Error recving packet." << std::endl;
+            // Packet doesn't even have the version? Skip
             continue;
         }
 
@@ -60,7 +65,7 @@ void InputListener::listen() {
             continue;
         }
 
-        // Important! We recieve data in Little Endian format
+        // We recieve data in Little Endian format, here, we assume the system uses little endian
         switch (version) {
         case 1:
             // We recieve 29 bytes.

@@ -19,25 +19,31 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\DriveLink.cpp" />
-    <ClCompile Include="src\network\Server.cpp" />
-    <ClCompile Include="src\platform\platform.cpp" />
+    <ClCompile Include="src\app\DriveLink.cpp" />
+    <ClCompile Include="src\core\Server.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\platform\Platform.cpp" />
+    <ClCompile Include="src\resources\ResourceManager.cpp" />
+    <ClCompile Include="src\ui\button.cpp" />
+    <ClCompile Include="src\ui\cross.cpp" />
+    <ClCompile Include="src\ui\progress.cpp" />
+    <ClCompile Include="src\ui\text.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\DriveLink.hpp" />
-    <ClInclude Include="include\InputState.hpp" />
-    <ClInclude Include="include\network\Protocols.hpp" />
-    <ClInclude Include="include\network\Server.hpp" />
-    <ClInclude Include="include\platform\platform.hpp" />
-    <ClInclude Include="include\ui\button.hpp" />
-    <ClInclude Include="include\ui\component.hpp" />
-    <ClInclude Include="include\ui\cross.hpp" />
-    <ClInclude Include="include\ui\text.hpp" />
-    <ClInclude Include="include\utility\Logger.hpp" />
-    <ClInclude Include="include\utility\Utils.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="assets\UI_Steering.png" />
+    <ClInclude Include="include\dl\ui\progress.hpp" />
+	<ClInclude Include="include\dl\core\Constants.hpp" />
+    <ClInclude Include="include\dl\app\DriveLink.hpp" />
+    <ClInclude Include="include\dl\core\InputState.hpp" />
+    <ClInclude Include="include\dl\core\Protocols.hpp" />
+    <ClInclude Include="include\dl\core\Server.hpp" />
+    <ClInclude Include="include\dl\platform\Platform.hpp" />
+    <ClInclude Include="include\dl\resources\ResourceManager.hpp" />
+    <ClInclude Include="include\dl\ui\button.hpp" />
+    <ClInclude Include="include\dl\ui\component.hpp" />
+    <ClInclude Include="include\dl\ui\cross.hpp" />
+    <ClInclude Include="include\dl\ui\text.hpp" />
+    <ClInclude Include="include\dl\utility\Logger.hpp" />
+    <ClInclude Include="include\dl\utility\Utils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\Gradient.frag" />
@@ -45,6 +51,9 @@
   <ItemGroup>
     <Font Include="assets\fonts\OpenSans-Regular.ttf" />
     <Font Include="assets\fonts\OpenSans-SemiBold.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\textures\UI_Steering.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>

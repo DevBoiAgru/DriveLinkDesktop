@@ -15,6 +15,7 @@ class InputListener {
 public:
     InputListener(int port)
         : m_port(port) { };
+    ~InputListener();
 
     /*
         Run the listener binded on the address provided.
