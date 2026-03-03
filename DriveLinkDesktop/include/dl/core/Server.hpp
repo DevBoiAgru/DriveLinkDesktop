@@ -13,8 +13,7 @@ namespace network {
 
 class InputListener {
 public:
-    InputListener(int port)
-        : m_port(port) { };
+    InputListener(int port);
     ~InputListener();
 
     /*

@@ -11,7 +11,10 @@ InputListener::~InputListener() {
     Stop();
 }
 
+InputListener::InputListener(int port) : m_port(port), m_running(false) {}
+
 void InputListener::Start() {
+    if (m_running.load()) return;
 
     auto res = m_socket.bind(
         m_port,
@@ -91,7 +94,9 @@ void InputListener::listen() {
 void InputListener::Stop() {
     m_socket.unbind();
     m_running.store(false);
-    m_thr.join();
+    if (m_thr.joinable()) {
+        m_thr.join();
+    }
 }
 
 } // namespace network

@@ -110,27 +110,29 @@ DriveLinkApp::DriveLinkApp(ResourceManager& resources)
 
     // Pedal indicators
     float pedalIndicatorHeight = dl::consts::IMAGE_H * 0.5f;
+    auto& input = dl::InputState::GetInstance();
+
     m_uiComponents.push_back(
         std::make_unique<dl::ui::Progress>(
             sf::Vector2f(70.f, pedalIndicatorHeight),
             sf::Vector2f(dl::consts::IMAGE_W * 0.1f, dl::consts::IMAGE_H * 0.5f),
-            [&]() { return dl::InputState::GetInstance().getClutch(); }, dl::consts::colors::pedal1
+            [&]() { return input.getClutch(); }, dl::consts::colors::pedal1
         )
     );
 
     m_uiComponents.push_back(
         std::make_unique<dl::ui::Progress>(
             sf::Vector2f(70.f, pedalIndicatorHeight),
-            sf::Vector2f(dl::consts::IMAGE_W * 0.1f + 80.f, dl::consts::IMAGE_H * 0.5f),
-            [&]() { return dl::InputState::GetInstance().getBrake(); }, dl::consts::colors::pedal2
+            sf::Vector2f(dl::consts::IMAGE_W * 0.1f + 90.f, dl::consts::IMAGE_H * 0.5f),
+            [&]() { return input.getBrake(); }, dl::consts::colors::pedal2
         )
     );
 
     m_uiComponents.push_back(
         std::make_unique<dl::ui::Progress>(
             sf::Vector2f(70.f, pedalIndicatorHeight),
-            sf::Vector2f(dl::consts::IMAGE_W * 0.1f + 160.f, dl::consts::IMAGE_H * 0.5f),
-            [&]() { return dl::InputState::GetInstance().getThrottle(); }, dl::consts::colors::pedal3
+            sf::Vector2f(dl::consts::IMAGE_W * 0.1f + 180.f, dl::consts::IMAGE_H * 0.5f),
+            [&]() { return input.getThrottle(); }, dl::consts::colors::pedal3
         )
     );
 
