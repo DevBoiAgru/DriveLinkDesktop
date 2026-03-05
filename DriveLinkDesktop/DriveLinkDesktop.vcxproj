@@ -21,8 +21,10 @@
   <ItemGroup>
     <ClCompile Include="src\app\DriveLink.cpp" />
     <ClCompile Include="src\core\Server.cpp" />
+    <ClCompile Include="src\input\GamepadFeeder.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\platform\Platform.cpp" />
+    <ClCompile Include="src\platform\windows\PlatformUtils.cpp" />
+    <ClCompile Include="src\platform\windows\vJoyGamepad.cpp" />
     <ClCompile Include="src\resources\ResourceManager.cpp" />
     <ClCompile Include="src\ui\button.cpp" />
     <ClCompile Include="src\ui\cross.cpp" />
@@ -30,13 +32,16 @@
     <ClCompile Include="src\ui\text.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\dl\input\GamepadFeeder.hpp" />
+    <ClInclude Include="include\dl\platform\VirtualGamepad.hpp" />
+    <ClInclude Include="include\dl\platform\windows\vJoyGamepad.hpp" />
     <ClInclude Include="include\dl\ui\progress.hpp" />
-	<ClInclude Include="include\dl\core\Constants.hpp" />
+    <ClInclude Include="include\dl\core\Constants.hpp" />
     <ClInclude Include="include\dl\app\DriveLink.hpp" />
     <ClInclude Include="include\dl\core\InputState.hpp" />
     <ClInclude Include="include\dl\core\Protocols.hpp" />
     <ClInclude Include="include\dl\core\Server.hpp" />
-    <ClInclude Include="include\dl\platform\Platform.hpp" />
+    <ClInclude Include="include\dl\platform\PlatformUtils.hpp" />
     <ClInclude Include="include\dl\resources\ResourceManager.hpp" />
     <ClInclude Include="include\dl\ui\button.hpp" />
     <ClInclude Include="include\dl\ui\component.hpp" />
@@ -44,9 +49,14 @@
     <ClInclude Include="include\dl\ui\text.hpp" />
     <ClInclude Include="include\dl\utility\Logger.hpp" />
     <ClInclude Include="include\dl\utility\Utils.hpp" />
+    <ClInclude Include="thirdparty\vJoy\include\gen-versioninfo.h" />
+    <ClInclude Include="thirdparty\vJoy\include\public.h" />
+    <ClInclude Include="thirdparty\vJoy\include\vjoyinterface.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\Gradient.frag" />
+    <None Include="thirdparty\vJoy\bin\x64\vJoyInterface.dll" />
+    <None Include="thirdparty\vJoy\bin\x86\vJoyInterface.dll" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\OpenSans-Regular.ttf" />
@@ -54,6 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\UI_Steering.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="thirdparty\vJoy\lib\x64\vJoyInterface.lib" />
+    <Library Include="thirdparty\vJoy\lib\x86\vJoyInterface.lib" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
@@ -117,11 +131,17 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)thirdparty\vjoy\include;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)thirdparty\vjoy\lib\x86</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)thirdparty\vJoy\bin\x86\vJoyInterface.dll" "$(OutDir)"</Command>
+      <Message>Add the vjoy dll next to the built .exe</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -132,11 +152,17 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)thirdparty\vjoy\include;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)thirdparty\vjoy\lib\x86</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)thirdparty\vJoy\bin\x86\vJoyInterface.dll" "$(OutDir)"</Command>
+      <Message>Add the vjoy dll next to the built .exe</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -145,13 +171,18 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)thirdparty\vjoy\include;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)thirdparty\vjoy\lib\x64</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)thirdparty\vJoy\bin\x64\vJoyInterface.dll" "$(OutDir)"</Command>
+      <Message>Add the vjoy dll next to the built .exe</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -162,13 +193,18 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)thirdparty\vjoy\include;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)thirdparty\vjoy\lib\x64</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)thirdparty\vJoy\bin\x64\vJoyInterface.dll" "$(OutDir)"</Command>
+      <Message>Add the vjoy dll next to the built .exe</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

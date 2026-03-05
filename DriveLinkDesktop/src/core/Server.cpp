@@ -1,7 +1,6 @@
 #include "dl/core/Server.hpp"
 
-#include "dl/platform/Platform.hpp"
-
+#include <bitset>
 #include <iostream>
 
 namespace dl {
@@ -11,15 +10,15 @@ InputListener::~InputListener() {
     Stop();
 }
 
-InputListener::InputListener(int port) : m_port(port), m_running(false) {}
+InputListener::InputListener(int port)
+    : m_port(port)
+    , m_running(false) { }
 
 void InputListener::Start() {
-    if (m_running.load()) return;
+    if (m_running.load())
+        return;
 
-    auto res = m_socket.bind(
-        m_port,
-        sf::IpAddress::resolve("0.0.0.0").value()
-    );
+    auto res = m_socket.bind(m_port, sf::IpAddress::resolve("0.0.0.0").value());
 
     switch (res) {
     case sf::Socket::Status::Error:
@@ -28,9 +27,7 @@ void InputListener::Start() {
 
     m_running.store(true);
 
-    m_thr = std::thread([this]() {
-        listen();
-    });
+    m_thr = std::thread([this]() { listen(); });
 }
 
 void InputListener::listen() {
@@ -68,11 +65,13 @@ void InputListener::listen() {
             continue;
         }
 
-        // We recieve data in Little Endian format, here, we assume the system uses little endian
+        // We recieve data in Little Endian format, here, we assume the system
+        // uses little endian
         switch (version) {
         case 1:
             // We recieve 29 bytes.
-            // 1 byte version + 4 * 4 byte floats + 8 byte long long int + 4 byte int
+            // 1 byte version + 4 * 4 byte floats + 8 byte long long int + 4
+            // byte int
             memcpy(&val_steering, buff + sizeof(char), sizeof(float));
             memcpy(&val_throttle, buff + sizeof(char) + sizeof(float), sizeof(float));
             memcpy(&val_brake, buff + sizeof(char) + 2 * sizeof(float), sizeof(float));
@@ -87,6 +86,7 @@ void InputListener::listen() {
             dl::InputState::GetInstance().setClutch(val_clutch);
             dl::InputState::GetInstance().setTimestamp(val_timestamp);
             dl::InputState::GetInstance().setButtons(val_buttons);
+            std::cout << std::bitset<32>(val_buttons) << std::endl;
         }
     }
 }

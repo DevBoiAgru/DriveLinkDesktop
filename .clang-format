@@ -13,6 +13,3 @@ FixNamespaceComments: true
 SpaceBeforeParens: ControlStatements
 SpacesInParentheses: false
 SpacesInContainerLiterals: false
-
-SortIncludes: true
-IncludeBlocks: Regroup

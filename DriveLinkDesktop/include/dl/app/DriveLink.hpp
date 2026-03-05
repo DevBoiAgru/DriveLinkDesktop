@@ -2,7 +2,7 @@
 
 #include "dl/core/Constants.hpp"
 #include "dl/core/Server.hpp"
-#include "dl/platform/platform.hpp"
+#include "dl/platform/PlatformUtils.hpp"
 #include "dl/resources/ResourceManager.hpp"
 #include "dl/ui/button.hpp"
 #include "dl/ui/cross.hpp"

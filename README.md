@@ -14,6 +14,8 @@ This component does the following:
 
 ## Dependencies and installation:
 You need the following components to build this app (Installed through vcpkg):
-- SDL3
-- ASIO
-- ImGUI
+- SFML
+
+## Building instructions
+
+If you want to build for x86 systems, you will need to change the dll that is copied (Project Properties -> Build Events -> Post-Build Event) and the additional library path (Linker -> Input -> Additional Dependencies) for vJoy to the x86 versions for the .dll and the .lib in visual studio project properties instead.

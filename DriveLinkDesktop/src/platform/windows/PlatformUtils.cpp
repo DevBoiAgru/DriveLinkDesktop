@@ -1,25 +1,18 @@
-#include "dl/platform/Platform.hpp"
-// Linux versions not implemented!!
-
-#ifdef _WIN32
+#include "dl/platform/PlatformUtils.hpp"
 #include <windows.h>
-#endif
 
 namespace dl {
 namespace platform {
 void minimiseWindow(sf::Window& window) {
     auto windowHandle = window.getNativeHandle();
 
-#ifdef _WIN32
     ::ShowWindow(windowHandle, SW_MINIMIZE);
-#endif
 }
 
 MessageBoxAction showMessageBox(sf::Window* window, MessageBoxType type, sf::String title, sf::String message) {
 
     auto windowHandle = window != nullptr ? window->getNativeHandle() : NULL;
 
-#ifdef _WIN32
     UINT flags = MB_OK;
 
     switch (type) {
@@ -48,8 +41,6 @@ MessageBoxAction showMessageBox(sf::Window* window, MessageBoxType type, sf::Str
     case IDCANCEL:
         return Cancel;
     }
-
-#endif
 
     return Ok;
 }

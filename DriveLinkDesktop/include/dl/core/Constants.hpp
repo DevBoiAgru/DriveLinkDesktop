@@ -5,6 +5,9 @@ namespace dl {
 
 namespace consts {
 
+constexpr double M_PI = 3.14159265358979323846;
+constexpr double M_PI_2 = 3.14159265358979323846 / 2.0;
+
 constexpr unsigned int IMAGE_W = 970;
 constexpr unsigned int IMAGE_H = 560;
 constexpr unsigned int UI_FPS_LIMIT = 30;
