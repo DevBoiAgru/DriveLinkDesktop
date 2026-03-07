@@ -25,7 +25,7 @@ inline sf::Color primaryAccent(192, 194, 171);
 inline sf::Color pedal1(77, 163, 255);
 inline sf::Color pedal2(227, 59, 59);
 inline sf::Color pedal3(76, 175, 80);
-inline sf::Color inputButtonActive(76, 175, 80);
+inline sf::Color inputButtonActive(176, 175, 180);
 
 inline sf::Color buttonRegular(94, 94, 97);
 inline sf::Color buttonHover(54, 54, 57);
