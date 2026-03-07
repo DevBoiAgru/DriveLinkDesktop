@@ -116,9 +116,15 @@
     <ClInclude Include="include\dl\ui\buttonIndicator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\UI_Steering.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\Icon.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -126,6 +132,7 @@
     <None Include="assets\shaders\Gradient.frag" />
     <None Include="thirdparty\vJoy\bin\x64\vJoyInterface.dll" />
     <None Include="thirdparty\vJoy\bin\x86\vJoyInterface.dll" />
+    <None Include="Resource.aps" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\OpenSans-SemiBold.ttf" />
@@ -134,5 +141,10 @@
   <ItemGroup>
     <Library Include="thirdparty\vJoy\lib\x64\vJoyInterface.lib" />
     <Library Include="thirdparty\vJoy\lib\x86\vJoyInterface.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

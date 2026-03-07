@@ -6,7 +6,7 @@
 #endif // _WIN32
 
 #if defined(_WIN32) && !defined(_DEBUG)
-int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int) {
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 #else
 int main() {
 #endif
@@ -26,5 +26,6 @@ int main() {
         return -1;
     } catch (...) {
         dl::platform::showMessageBox(nullptr, dl::platform::MessageBoxType::Error, "Error", "Unknown error");
+        return -1;
     }
 }

@@ -51,12 +51,14 @@
     <ClInclude Include="include\dl\ui\text.hpp" />
     <ClInclude Include="include\dl\utility\Logger.hpp" />
     <ClInclude Include="include\dl\utility\Utils.hpp" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="thirdparty\vJoy\include\gen-versioninfo.h" />
     <ClInclude Include="thirdparty\vJoy\include\public.h" />
     <ClInclude Include="thirdparty\vJoy\include\vjoyinterface.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\Gradient.frag" />
+    <None Include="Resource.aps" />
     <None Include="thirdparty\vJoy\bin\x64\vJoyInterface.dll" />
     <None Include="thirdparty\vJoy\bin\x86\vJoyInterface.dll" />
   </ItemGroup>
@@ -66,10 +68,14 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\UI_Steering.png" />
+    <Image Include="resources\Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="thirdparty\vJoy\lib\x64\vJoyInterface.lib" />
     <Library Include="thirdparty\vJoy\lib\x86\vJoyInterface.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
@@ -141,8 +147,10 @@
       <AdditionalLibraryDirectories>$(ProjectDir)thirdparty\vjoy\lib\x86</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(ProjectDir)thirdparty\vJoy\bin\x86\vJoyInterface.dll" "$(OutDir)"</Command>
-      <Message>Add the vjoy dll next to the built .exe</Message>
+      <Command>copy "$(ProjectDir)thirdparty\vJoy\bin\x86\vJoyInterface.dll" "$(TargetDir)"
+robocopy "$(ProjectDir)assets" "$(TargetDir)assets" /E
+if %ERRORLEVEL% LEQ 7 exit 0</Command>
+      <Message>Copy the assets folder and vjoy dll next to the built .exe</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -162,8 +170,10 @@
       <AdditionalLibraryDirectories>$(ProjectDir)thirdparty\vjoy\lib\x86</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(ProjectDir)thirdparty\vJoy\bin\x86\vJoyInterface.dll" "$(OutDir)"</Command>
-      <Message>Add the vjoy dll next to the built .exe</Message>
+      <Command>copy "$(ProjectDir)thirdparty\vJoy\bin\x86\vJoyInterface.dll" "$(TargetDir)"
+robocopy "$(ProjectDir)assets" "$(TargetDir)assets" /E
+if %ERRORLEVEL% LEQ 7 exit 0</Command>
+      <Message>Copy the assets folder and vjoy dll next to the built .exe</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -182,8 +192,10 @@
       <AdditionalLibraryDirectories>$(ProjectDir)thirdparty\vjoy\lib\x64</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(ProjectDir)thirdparty\vJoy\bin\x64\vJoyInterface.dll" "$(OutDir)"</Command>
-      <Message>Add the vjoy dll next to the built .exe</Message>
+      <Command>copy "$(ProjectDir)thirdparty\vJoy\bin\x64\vJoyInterface.dll" "$(TargetDir)"
+robocopy "$(ProjectDir)assets" "$(TargetDir)assets" /E
+if %ERRORLEVEL% LEQ 7 exit 0</Command>
+      <Message>Copy the assets folder and vjoy dll next to the built .exe</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -204,8 +216,10 @@
       <AdditionalLibraryDirectories>$(ProjectDir)thirdparty\vjoy\lib\x64</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(ProjectDir)thirdparty\vJoy\bin\x64\vJoyInterface.dll" "$(OutDir)"</Command>
-      <Message>Add the vjoy dll next to the built .exe</Message>
+      <Command>copy "$(ProjectDir)thirdparty\vJoy\bin\x64\vJoyInterface.dll" "$(TargetDir)"
+robocopy "$(ProjectDir)assets" "$(TargetDir)assets" /E
+if %ERRORLEVEL% LEQ 7 exit 0</Command>
+      <Message>Copy the assets folder and vjoy dll next to the built .exe</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

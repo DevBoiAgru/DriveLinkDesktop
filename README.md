@@ -26,19 +26,13 @@ DriveLink Desktop acts as a "Bridge" in the system:
 
 ## Requirements
 - **OS**: Windows 10/11 (64-bit).
-- **vJoy Driver**: Required to emulate the virtual gamepad. [Download vJoy](https://sourceforge.net/projects/vjoystick/).
-
+- **Visual C++ Redistrubutables**: [Download here](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
 - **Local Network**: Phone and PC must be on the same WiFi network.
 
 ## Installation
-1. **Install vJoy**: Download and install the vJoy driver.
-2. **Configure vJoy**:
-   - Open **vJoy Conf**.
-   - Ensure Device 1 is enabled with:
-     - 4 Axes (X, Y, Z, Rx).
-     - At least 10 Buttons.
-3. **Download DriveLink**: Get the latest binary from the [Releases](https://github.com/YourRepo/DriveLinkDesktop/releases) page.
-4. **Firewall**: Ensure UDP port `7001` is open in your Windows Firewall for the local network. If there is a dialog that asks for permission to allow access to the network, click **Allow access**.
+1. **Download DriveLink**: Get the latest binary from the [Releases](https://github.com/DevBoiAgru/DriveLinkDesktop/releases) page.
+2. **Install DriveLink**: Run the installer. It should install the app and vJoy driver automatically.
+**Firewall troubleshooting**: Ensure UDP port `7001` is open in your Windows Firewall for the local network. If there is a dialog that asks for permission to allow access to the network, click **Allow access**.
 
 ## Usage
 1. **Install apps**: Install the Android app on your mobile and Desktop app on your PC.
@@ -61,7 +55,6 @@ DriveLink uses a custom binary protocol over UDP for maximum performance.
   - Verify phone and PC are on the same WiFi.
   - Double-check the PC's IP address.
   - Disable Windows Firewall temporarily to test.
-
 
 ## Contributing / Building from Source
 DriveLink is built with **C++20** and **SFML 3.0**.
