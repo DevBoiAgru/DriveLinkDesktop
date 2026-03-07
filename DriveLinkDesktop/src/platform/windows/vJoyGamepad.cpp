@@ -62,6 +62,10 @@ void VJoyGamepad::setSteering(float val) {
     m_report.wAxisX = mapAngleToAxis(val, m_steeringAxisMin, m_steeringAxisMax);
 }
 
+void VJoyGamepad::setButtons(uint32_t buttonMask) {
+    m_report.lButtons = buttonMask;
+}
+
 void VJoyGamepad::update() {
     UpdateVJD(m_devId, &m_report);
 }

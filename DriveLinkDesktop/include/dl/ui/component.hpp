@@ -22,6 +22,8 @@ struct UIState {
 
     bool previouslyLeftDown = false;
     bool previouslyRightDown = false;
+
+    uint32_t buttons = 0;
 };
 
 class Component {

@@ -16,7 +16,7 @@ public:
     void setThrottle(float val) override;
     void setBrake(float val) override;
     void setClutch(float val) override;
-
+    void setButtons(uint32_t buttonMask) override;
     void update() override;
 
 private:

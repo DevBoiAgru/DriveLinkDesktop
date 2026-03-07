@@ -5,6 +5,7 @@
 #include "dl/platform/PlatformUtils.hpp"
 #include "dl/resources/ResourceManager.hpp"
 #include "dl/ui/button.hpp"
+#include "dl/ui/buttonIndicator.hpp"
 #include "dl/ui/cross.hpp"
 #include "dl/ui/progress.hpp"
 #include "dl/ui/text.hpp"

@@ -110,31 +110,70 @@ DriveLinkApp::DriveLinkApp(ResourceManager& resources)
 
     // Pedal indicators
     float pedalIndicatorHeight = dl::consts::IMAGE_H * 0.5f;
+    float pedalIndicatorY = dl::consts::IMAGE_H * 0.5f;
+    float pedalIndicatorStartX = dl::consts::IMAGE_W * 0.1f;
     auto& input = dl::InputState::GetInstance();
 
     m_uiComponents.push_back(
         std::make_unique<dl::ui::Progress>(
-            sf::Vector2f(70.f, pedalIndicatorHeight),
-            sf::Vector2f(dl::consts::IMAGE_W * 0.1f, dl::consts::IMAGE_H * 0.5f),
+            sf::Vector2f(dl::consts::ui::PedalWidth, pedalIndicatorHeight),
+            sf::Vector2f(pedalIndicatorStartX + 0 * (dl::consts::ui::PedalWidth + dl::consts::ui::PedalSpacing), pedalIndicatorY),
             [&]() { return input.getClutch(); }, dl::consts::colors::pedal1
         )
     );
 
     m_uiComponents.push_back(
         std::make_unique<dl::ui::Progress>(
-            sf::Vector2f(70.f, pedalIndicatorHeight),
-            sf::Vector2f(dl::consts::IMAGE_W * 0.1f + 90.f, dl::consts::IMAGE_H * 0.5f),
+            sf::Vector2f(dl::consts::ui::PedalWidth, pedalIndicatorHeight),
+            sf::Vector2f(pedalIndicatorStartX + 1 * (dl::consts::ui::PedalWidth + dl::consts::ui::PedalSpacing), pedalIndicatorY),
             [&]() { return input.getBrake(); }, dl::consts::colors::pedal2
         )
     );
 
     m_uiComponents.push_back(
         std::make_unique<dl::ui::Progress>(
-            sf::Vector2f(70.f, pedalIndicatorHeight),
-            sf::Vector2f(dl::consts::IMAGE_W * 0.1f + 180.f, dl::consts::IMAGE_H * 0.5f),
+            sf::Vector2f(dl::consts::ui::PedalWidth, pedalIndicatorHeight),
+            sf::Vector2f(pedalIndicatorStartX + 2 * (dl::consts::ui::PedalWidth + dl::consts::ui::PedalSpacing), pedalIndicatorY),
             [&]() { return input.getThrottle(); }, dl::consts::colors::pedal3
         )
     );
+
+    // Button indicators
+    float progressHeight = pedalIndicatorHeight;
+    float spacing = dl::consts::ui::SpacingSmall;
+
+    sf::Vector2f indicatorSize(50.f, 50.f);
+
+    // Grid height
+    float gridHeight = 5 * indicatorSize.y + 4 * spacing;
+
+    // Align vertically with progress bars
+    float startY = pedalIndicatorY - gridHeight * 0.5f;
+
+    sf::Vector2f startPos(
+        pedalIndicatorStartX + 3.f * (dl::consts::ui::PedalWidth + dl::consts::ui::PedalSpacing),
+        startY
+    );
+
+    for (int i = 0; i < 10; i++) {
+        int col = i % 2;
+        int row = i / 2;
+
+        sf::Vector2f pos(
+            startPos.x + col * (indicatorSize.x + spacing),
+            startPos.y + row * (indicatorSize.y + spacing)
+        );
+
+        m_uiComponents.push_back(
+            std::make_unique<dl::ui::ButtonIndicator>(
+                i,
+                pos,
+                indicatorSize,
+                dl::consts::colors::Transparent,
+                dl::consts::colors::inputButtonActive
+            )
+        );
+    }
 
     m_connectionIndicator.setOrigin({ 5.f, 5.f });
     m_connectionIndicator.setPosition({ dl::consts::TITLEBAR_HEIGHT * 0.5f, dl::consts::TITLEBAR_HEIGHT * 0.5f });
@@ -194,7 +233,10 @@ void DriveLinkApp::processEvent(const std::optional<sf::Event>& event) {
 }
 
 void DriveLinkApp::update() {
-    m_steeringSprite->setRotation(sf::radians(-dl::InputState::GetInstance().getSteering()));
+    dl::InputState& inputState = dl::InputState::GetInstance();
+
+    m_steeringSprite->setRotation(sf::radians(-inputState.getSteering()));
+    m_uiState.buttons = inputState.getButtons();
 
     for (auto& component : m_uiComponents) {
         component->update(m_uiState);

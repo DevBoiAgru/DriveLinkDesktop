@@ -28,6 +28,7 @@ void GamepadFeeder::updateLoop() {
         m_gamepad->setClutch(inputState.getClutch());
         m_gamepad->setThrottle(inputState.getThrottle());
         m_gamepad->setSteering(inputState.getSteering());
+        m_gamepad->setButtons(inputState.getButtons());
 
         m_gamepad->update();
         std::this_thread::sleep_for(10ms);

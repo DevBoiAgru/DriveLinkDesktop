@@ -1,6 +1,5 @@
 #include "dl/core/Server.hpp"
 
-#include <bitset>
 #include <iostream>
 
 namespace dl {
@@ -76,8 +75,8 @@ void InputListener::listen() {
             memcpy(&val_throttle, buff + sizeof(char) + sizeof(float), sizeof(float));
             memcpy(&val_brake, buff + sizeof(char) + 2 * sizeof(float), sizeof(float));
             memcpy(&val_clutch, buff + sizeof(char) + 3 * sizeof(float), sizeof(float));
-            memcpy(&val_timestamp, buff + sizeof(char) + 4 * sizeof(float), sizeof(long long int));
-            memcpy(&val_buttons, buff + sizeof(char) + 4 * sizeof(float) + sizeof(long long int), sizeof(uint32_t));
+            memcpy(&val_buttons, buff + sizeof(char) + 4 * sizeof(float), sizeof(uint32_t));
+            memcpy(&val_timestamp, buff + sizeof(char) + 4 * sizeof(float) + sizeof(uint32_t), sizeof(long long int));
 
             // Update values in the input state
             dl::InputState::GetInstance().setSteering(val_steering);
@@ -86,7 +85,6 @@ void InputListener::listen() {
             dl::InputState::GetInstance().setClutch(val_clutch);
             dl::InputState::GetInstance().setTimestamp(val_timestamp);
             dl::InputState::GetInstance().setButtons(val_buttons);
-            std::cout << std::bitset<32>(val_buttons) << std::endl;
         }
     }
 }

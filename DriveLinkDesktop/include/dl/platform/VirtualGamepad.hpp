@@ -18,6 +18,9 @@ public:
     // Takes the value as a float 0-1, 0 being not pressed, 1 being fully pressed
     virtual void setClutch(float val) = 0;
 
+    // Takes the buttons as a bitmask
+    virtual void setButtons(uint32_t buttonMask) = 0;
+
     virtual void update() = 0;
 
 protected:

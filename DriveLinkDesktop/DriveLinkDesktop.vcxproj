@@ -27,6 +27,7 @@
     <ClCompile Include="src\platform\windows\vJoyGamepad.cpp" />
     <ClCompile Include="src\resources\ResourceManager.cpp" />
     <ClCompile Include="src\ui\button.cpp" />
+    <ClCompile Include="src\ui\buttonIndicator.cpp" />
     <ClCompile Include="src\ui\cross.cpp" />
     <ClCompile Include="src\ui\progress.cpp" />
     <ClCompile Include="src\ui\text.cpp" />
@@ -35,6 +36,7 @@
     <ClInclude Include="include\dl\input\GamepadFeeder.hpp" />
     <ClInclude Include="include\dl\platform\VirtualGamepad.hpp" />
     <ClInclude Include="include\dl\platform\windows\vJoyGamepad.hpp" />
+    <ClInclude Include="include\dl\ui\buttonIndicator.hpp" />
     <ClInclude Include="include\dl\ui\progress.hpp" />
     <ClInclude Include="include\dl\core\Constants.hpp" />
     <ClInclude Include="include\dl\app\DriveLink.hpp" />
