@@ -5,10 +5,15 @@
 #include "dl/platform/windows/vJoyGamepad.hpp"
 #endif // _WIN32
 
+#if defined(_WIN32) && !defined(_DEBUG)
+int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int) {
+#else
 int main() {
+#endif
+
     dl::ResourceManager resources;
 
-    // Windows only vJoy gamepad iniialisation
+    // Windows only vJoy gamepad initialisation
 #ifdef _WIN32
     dl::GamepadFeeder feeder(std::make_unique<dl::VJoyGamepad>());
 #endif
@@ -19,5 +24,7 @@ int main() {
     } catch (const std::exception& e) {
         dl::platform::showMessageBox(nullptr, dl::platform::MessageBoxType::Error, "Error", e.what());
         return -1;
+    } catch (...) {
+        dl::platform::showMessageBox(nullptr, dl::platform::MessageBoxType::Error, "Error", "Unknown error");
     }
 }

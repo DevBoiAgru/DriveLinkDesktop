@@ -157,7 +157,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)thirdparty\vjoy\include;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)thirdparty\vjoy\lib\x86</AdditionalLibraryDirectories>
     </Link>
@@ -198,7 +198,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)thirdparty\vjoy\include;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)thirdparty\vjoy\lib\x64</AdditionalLibraryDirectories>

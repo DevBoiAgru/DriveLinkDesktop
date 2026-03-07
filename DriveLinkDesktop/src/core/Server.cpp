@@ -1,7 +1,5 @@
 #include "dl/core/Server.hpp"
 
-#include <iostream>
-
 namespace dl {
 namespace network {
 
@@ -21,7 +19,7 @@ void InputListener::Start() {
 
     switch (res) {
     case sf::Socket::Status::Error:
-        std::cerr << "Error binding the UDP socket." << std::endl;
+        throw std::runtime_error("Error while trying to bind the UDP socket.");
     }
 
     m_running.store(true);
