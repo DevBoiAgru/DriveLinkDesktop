@@ -1,15 +1,17 @@
+; This script creates an installer for drivelink 64bit for Windows
+
 ; BEFORE COMPILING THIS SCRIPT
 ; MAKE SURE:
 ;  - You have built the solution in Release mode, this script looks for the
-;    executables in x64\Release directory.
-;  - You have the vJoySetup.exe in x64\ directory. (x64\vJoySetup.exe)
+;    executables in ..\x64\Release directory.
+;  - You have the vJoySetup.exe in ..\x64\ directory. (This should exist -> ..\x64\vJoySetup.exe)
 
 !include "MUI2.nsh"
 
 Name "DriveLink"
-Icon "DriveLinkDesktop\resources\Icon.ico"
-OutFile "build\DriveLinkSetup.exe"
-InstallDir "$PROGRAMFILES\DriveLink"
+Icon "..\DriveLinkDesktop\resources\Icon.ico"
+OutFile "..\build\DriveLinkSetup.exe"
+InstallDir "$PROGRAMFILES64\DriveLink"
 !define APP_EXE "DriveLinkDesktop.exe"
 
 
@@ -31,7 +33,7 @@ ExecWait 'taskkill /IM ${APP_EXE} /F >nul 2>&1'
 
 SetOutPath "$INSTDIR"
 
-File /r /x *.pdb /x *.obj /x *.ilk "x64\Release\*"
+File /r /x *.pdb /x *.obj /x *.ilk "..\x64\Release\*"
 
 ReadRegStr $0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\vJoy" "DisplayName"
 StrCmp $0 "" install_vjoy skip_vjoy
