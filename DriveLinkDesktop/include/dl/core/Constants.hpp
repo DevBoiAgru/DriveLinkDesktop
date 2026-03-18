@@ -5,19 +5,24 @@ namespace dl {
 
 namespace consts {
 
+// Math constants
 constexpr double M_PI = 3.14159265358979323846;
 constexpr double M_PI_2 = 3.14159265358979323846 / 2.0;
 
+// Program window constants
 constexpr unsigned int IMAGE_W = 970;
 constexpr unsigned int IMAGE_H = 560;
 constexpr unsigned int UI_FPS_LIMIT = 30;
 constexpr float aspect_ratio = float(IMAGE_W) / IMAGE_H;
-
 constexpr float TITLEBAR_HEIGHT = 45;
 
-namespace colors {
+// Log
+const std::string LOG_FILE_PATH = "log.txt";
 
+// SFML Colours for the entire app for elements
+namespace colors {
 inline sf::Color Transparent(0, 0, 0, 0);
+
 inline sf::Color bgFallback(20, 20, 20);
 inline sf::Color titleBar(100, 10, 10);
 inline sf::Color primaryAccent(192, 194, 171);

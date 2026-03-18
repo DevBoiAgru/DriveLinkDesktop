@@ -10,7 +10,7 @@
 
 Name "DriveLink"
 Icon "..\DriveLinkDesktop\resources\Icon.ico"
-OutFile "..\build\DriveLinkSetup.exe"
+OutFile "DriveLinkSetup.exe"
 InstallDir "$PROGRAMFILES64\DriveLink"
 !define APP_EXE "DriveLinkDesktop.exe"
 
@@ -39,7 +39,7 @@ ReadRegStr $0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\vJoy" "D
 StrCmp $0 "" install_vjoy skip_vjoy
 
 install_vjoy:
-File "/oname=$TEMP\vJoySetup.exe" "x64\vJoySetup.exe"
+File "/oname=$TEMP\vJoySetup.exe" "..\x64\vJoySetup.exe"
 ExecWait '"$TEMP\vJoySetup.exe" /SILENT'
 Delete "$TEMP\vJoySetup.exe"
 

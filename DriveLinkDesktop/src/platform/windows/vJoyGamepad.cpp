@@ -1,4 +1,5 @@
 #include "dl/platform/windows/vJoyGamepad.hpp"
+#include "dl/utility/Logger.hpp"
 
 namespace dl {
 namespace {
@@ -16,18 +17,22 @@ static LONG mapAngleToAxis(float angle, LONG axisMin, LONG axisMax) {
 } // namespace
 
 VJoyGamepad::VJoyGamepad() {
+    utils::Logger& logger = utils::Logger::GetLogger();
 
     if (!vJoyEnabled()) {
+        logger.error("vJoy not enabled. Perhaps vJoy is not installed?");
         throw std::runtime_error("vJoy driver is required for this application to work. Install it if it isn't installed yet.");
     }
 
     VjdStat deviceStatus = GetVJDStatus(m_devId);
 
     if (deviceStatus != VJD_STAT_FREE) {
+        logger.error("vJoy device already in use. Make sure there are no other instances of the app running in the background.");
         throw std::runtime_error("vJoy device is in use. Make sure there are no other instances of the application running.");
     }
 
     if (!AcquireVJD(m_devId)) {
+        logger.error("Failed to acquire vJoy device.");
         throw std::runtime_error("Failed to acquire vJoy device");
     }
     m_report.bDevice = m_devId;

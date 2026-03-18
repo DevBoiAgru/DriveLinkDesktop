@@ -1,4 +1,5 @@
 #include "dl/core/Server.hpp"
+#include "dl/utility/Logger.hpp"
 
 namespace dl {
 namespace network {
@@ -15,10 +16,12 @@ void InputListener::Start() {
     if (m_running.load())
         return;
 
+    dl::utils::Logger& logger = dl::utils::Logger::GetLogger();
     auto res = m_socket.bind(m_port, sf::IpAddress::resolve("0.0.0.0").value());
 
     switch (res) {
     case sf::Socket::Status::Error:
+        logger.error("Failed to bind UDP socket.");
         throw std::runtime_error("Error while trying to bind the UDP socket.");
     }
 

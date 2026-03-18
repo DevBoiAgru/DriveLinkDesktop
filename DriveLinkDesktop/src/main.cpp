@@ -1,5 +1,6 @@
 #include "dl/app/DriveLink.hpp"
 #include "dl/input/GamepadFeeder.hpp"
+#include "dl/utility/Logger.hpp"
 
 #ifdef _WIN32
 #include "dl/platform/windows/vJoyGamepad.hpp"
@@ -11,10 +12,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 int main() {
 #endif
 
+    // Start main
+
+    // Initialise logger
+    dl::utils::Logger& logger = dl::utils::Logger::GetLogger();
+
+    // Initialise resource manager
+    logger.info("Initialising resource manager");
     dl::ResourceManager resources;
 
     // Windows only vJoy gamepad initialisation
 #ifdef _WIN32
+    logger.info("Creating Windows vJoy Gamepad");
     dl::GamepadFeeder feeder(std::make_unique<dl::VJoyGamepad>());
 #endif
 

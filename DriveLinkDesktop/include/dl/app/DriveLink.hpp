@@ -9,6 +9,7 @@
 #include "dl/ui/cross.hpp"
 #include "dl/ui/progress.hpp"
 #include "dl/ui/text.hpp"
+#include "dl/utility/Utils.hpp"
 
 #include <memory>
 #include <SFML/Graphics.hpp>

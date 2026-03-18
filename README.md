@@ -55,6 +55,10 @@ DriveLink uses a custom binary protocol over UDP for maximum performance.
   - Verify phone and PC are on the same WiFi.
   - Double-check the PC's IP address.
   - Disable Windows Firewall temporarily to test.
+- **The code execution cannot proceed because `dllname.dll` was not found. Reinstalling the program may fix this problem.**
+  - Download and install Visual C++ Redistributables from [here.](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
+- **Not sure what the issue is?**
+  - Check the log file, by default in the install location `log.txt`. It saves the logs of the last time the program ran. Overwritten everytime program starts.
 
 ## Contributing / Building from Source
 DriveLink is built with **C++20** and **SFML 3.0**.

@@ -51,6 +51,9 @@
     <ClCompile Include="src\ui\buttonIndicator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utility\Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\dl\app\DriveLink.hpp">

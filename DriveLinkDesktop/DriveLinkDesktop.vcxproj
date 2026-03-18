@@ -31,6 +31,7 @@
     <ClCompile Include="src\ui\cross.cpp" />
     <ClCompile Include="src\ui\progress.cpp" />
     <ClCompile Include="src\ui\text.cpp" />
+    <ClCompile Include="src\utility\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\dl\input\GamepadFeeder.hpp" />

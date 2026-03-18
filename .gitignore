@@ -438,5 +438,3 @@ FodyWeavers.xsd
 
 
 vcpkg_installed/
-
-build/
