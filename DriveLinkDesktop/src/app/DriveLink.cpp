@@ -162,7 +162,7 @@ DriveLinkApp::DriveLinkApp(ResourceManager& resources)
         startY
     );
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 8; i++) {
         int col = i % 2;
         int row = i / 2;
 

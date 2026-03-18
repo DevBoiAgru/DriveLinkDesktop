@@ -3,14 +3,11 @@
 
 namespace dl {
 namespace {
-static LONG mapAngleToAxis(float angle, LONG axisMin, LONG axisMax) {
-    float t = (angle + static_cast<float>(dl::consts::M_PI_2)) / static_cast<float>(dl::consts::M_PI);
 
-    // clamp just in case
-    if (t < 0.f)
-        t = 0.f;
-    if (t > 1.f)
-        t = 1.f;
+// Maps [-1,1] range to the min and max provided. Doesn't clamp the input.
+static LONG mapAngleToAxis(float value, LONG axisMin, LONG axisMax) {
+    // map [-1,1] → [0,1]
+    float t = (value + 1.f) * 0.5f;
 
     return axisMin + static_cast<LONG>((axisMax - axisMin) * t);
 }

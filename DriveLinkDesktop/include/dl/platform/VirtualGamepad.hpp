@@ -8,7 +8,7 @@ class VirtualGamepad {
 public:
     virtual ~VirtualGamepad() = default;
 
-    // Takes the value in as angle in radians, in range -pi/2 to pi/2
+    // Takes the value in as angle in radians, in range -1 to 1
     virtual void setSteering(float val) = 0;
 
     // Takes the value as a float 0-1, 0 being not pressed, 1 being fully pressed
