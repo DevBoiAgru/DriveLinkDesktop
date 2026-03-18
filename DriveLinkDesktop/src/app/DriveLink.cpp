@@ -242,7 +242,7 @@ void DriveLinkApp::processEvent(const std::optional<sf::Event>& event) {
 void DriveLinkApp::update() {
     dl::InputState& inputState = dl::InputState::GetInstance();
 
-    m_steeringSprite->setRotation(sf::radians(-inputState.getSteering()));
+    m_steeringSprite->setRotation(sf::radians(-inputState.getSteering() * dl::consts::M_PI_2));
     m_uiState.buttons = inputState.getButtons();
 
     for (auto& component : m_uiComponents) {
