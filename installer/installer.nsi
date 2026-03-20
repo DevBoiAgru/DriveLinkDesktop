@@ -33,7 +33,7 @@ ExecWait 'taskkill /IM ${APP_EXE} /F >nul 2>&1'
 
 SetOutPath "$INSTDIR"
 
-File /r /x *.pdb /x *.obj /x *.ilk "..\x64\Release\*"
+File /r /x *.pdb /x *.obj /x *.ilk /x *.txt "..\x64\Release\*"
 
 ReadRegStr $0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\vJoy" "DisplayName"
 StrCmp $0 "" install_vjoy skip_vjoy
