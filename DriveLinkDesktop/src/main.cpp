@@ -31,9 +31,11 @@ int main() {
         dl::DriveLinkApp app(resources);
         return app.run();
     } catch (const std::exception& e) {
+        logger.flushLog();
         dl::platform::showMessageBox(nullptr, dl::platform::MessageBoxType::Error, "Error", e.what());
         return -1;
     } catch (...) {
+        logger.flushLog();
         dl::platform::showMessageBox(nullptr, dl::platform::MessageBoxType::Error, "Error", "Unknown error");
         return -1;
     }

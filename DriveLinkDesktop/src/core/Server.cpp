@@ -42,6 +42,7 @@ void InputListener::listen() {
     float val_brake;
     float val_clutch;
     long long int val_timestamp;
+    long long int last_timestamp { 0 };
     uint32_t val_buttons;
 
     while (m_running.load()) {
@@ -79,13 +80,18 @@ void InputListener::listen() {
             memcpy(&val_buttons, buff + sizeof(char) + 4 * sizeof(float), sizeof(uint32_t));
             memcpy(&val_timestamp, buff + sizeof(char) + 4 * sizeof(float) + sizeof(uint32_t), sizeof(long long int));
 
-            // Update values in the input state
-            dl::InputState::GetInstance().setSteering(val_steering);
-            dl::InputState::GetInstance().setThrottle(val_throttle);
-            dl::InputState::GetInstance().setBrake(val_brake);
-            dl::InputState::GetInstance().setClutch(val_clutch);
-            dl::InputState::GetInstance().setTimestamp(val_timestamp);
-            dl::InputState::GetInstance().setButtons(val_buttons);
+            // Update values in the input state only if timestamp is newer than the last one
+            if (val_timestamp > last_timestamp) {
+                dl::InputState& inputState = dl::InputState::GetInstance();
+                inputState.setSteering(val_steering);
+                inputState.setThrottle(val_throttle);
+                inputState.setBrake(val_brake);
+                inputState.setClutch(val_clutch);
+                inputState.setTimestamp(val_timestamp);
+                inputState.setButtons(val_buttons);
+
+                last_timestamp = val_timestamp;
+            }
         }
     }
 }
