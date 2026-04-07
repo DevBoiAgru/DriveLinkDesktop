@@ -3,7 +3,8 @@
 namespace dl {
 using namespace std::chrono_literals;
 
-GamepadFeeder::GamepadFeeder(std::unique_ptr<VirtualGamepad> gamepad)
+template <typename AxisResT>
+GamepadFeeder<AxisResT>::GamepadFeeder(std::unique_ptr<dl::VirtualGamepad<AxisResT>> gamepad)
     : m_gamepad(std::move(gamepad)) {
 
     if (m_running.load())
@@ -13,14 +14,16 @@ GamepadFeeder::GamepadFeeder(std::unique_ptr<VirtualGamepad> gamepad)
     m_thr = std::thread([this]() { updateLoop(); });
 }
 
-GamepadFeeder::~GamepadFeeder() {
+template <typename AxisResT>
+GamepadFeeder<AxisResT>::~GamepadFeeder() {
     m_running.store(false);
     if (m_thr.joinable()) {
         m_thr.join();
     }
 }
 
-void GamepadFeeder::updateLoop() {
+template <typename AxisResT>
+void GamepadFeeder<AxisResT>::updateLoop() {
     dl::InputState& inputState = dl::InputState::GetInstance();
 
     while (m_running.load()) {
@@ -35,4 +38,5 @@ void GamepadFeeder::updateLoop() {
     }
 }
 
+template class dl::GamepadFeeder<int>;
 } // namespace dl

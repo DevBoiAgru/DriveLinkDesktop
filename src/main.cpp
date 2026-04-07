@@ -26,10 +26,10 @@ int main() {
     // Windows only vJoy gamepad initialisation
 #ifdef _WIN32
     logger.info("Creating Windows vJoy Gamepad");
-    dl::GamepadFeeder feeder(std::make_unique<dl::VJoyGamepad>());
+    dl::GamepadFeeder<long> feeder(std::make_unique<dl::VJoyGamepad>());
 #else
     logger.info("Creating Linux Gamepad");
-    dl::GamepadFeeder feeder(std::make_unique<dl::LinuxGamepad>());
+    dl::GamepadFeeder<__s32> feeder(std::make_unique<dl::LinuxGamepad>());
 #endif
 
     try {

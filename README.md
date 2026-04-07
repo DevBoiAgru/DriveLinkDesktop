@@ -76,8 +76,13 @@ DriveLink is built with **C++20** and **SFML 3.0**.
 - `src/ui`: SFML-based UI components.
 - `include/dl/core/Protocols.hpp`: Definition of the UDP packet format.
 
+### Known issues
+Contributions are very welcome for fixes for these!
+- No message box support on linux.
+- No window minimizing on linux.
+- Axes may not be consistent between platforms, for example throttle axis on windows may be mapped to windows' brake on linux. 
+
 ## Future Improvements
-- Support for Linux (using `uinput`).
 - Dynamic port configuration via UI.
 - Force Feedback support.
 - More interactive widgets like line charts on the interface.

@@ -7,7 +7,7 @@
 
 namespace dl {
 
-class VJoyGamepad : public VirtualGamepad {
+class VJoyGamepad : public VirtualGamepad<LONG> {
 public:
     VJoyGamepad();
     ~VJoyGamepad();
