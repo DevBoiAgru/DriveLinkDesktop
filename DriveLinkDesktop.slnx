@@ -1,7 +1,0 @@
-<Solution>
-  <Configurations>
-    <Platform Name="x64" />
-    <Platform Name="x86" />
-  </Configurations>
-  <Project Path="DriveLinkDesktop/DriveLinkDesktop.vcxproj" Id="25369c42-3389-489c-b141-4baf028e0f39" />
-</Solution>
