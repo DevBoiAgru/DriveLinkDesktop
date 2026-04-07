@@ -50,6 +50,16 @@ LinuxGamepad::LinuxGamepad() {
     }
 
     // Set up the axes
+    m_throttleAxisMax = 32767;
+    m_brakeAxisMax = 32767;
+    m_clutchAxisMax = 32767;
+    m_steeringAxisMax = 32767;
+
+    m_throttleAxisMin = -32768;
+    m_brakeAxisMin = -32768;
+    m_clutchAxisMin = -32768;
+    m_steeringAxisMin = -32768;
+
     ioctl(m_fd, UI_SET_EVBIT, EV_ABS);
     for (const auto axis: m_axes) {
         // Enable the axis
@@ -70,11 +80,11 @@ LinuxGamepad::LinuxGamepad() {
             abs.absinfo.minimum = m_brakeAxisMin;
             abs.absinfo.maximum = m_brakeAxisMax;
             break;
-        case ABS_Z:
+        case ABS_RX:
             abs.absinfo.minimum = m_clutchAxisMin;
             abs.absinfo.maximum = m_clutchAxisMax;
             break;
-        case ABS_RX:
+        case ABS_RY:
             abs.absinfo.minimum = m_steeringAxisMin;
             abs.absinfo.maximum = m_steeringAxisMax;
             break;
@@ -85,26 +95,15 @@ LinuxGamepad::LinuxGamepad() {
         ioctl(m_fd, UI_ABS_SETUP, &abs);
     }
 
-    m_throttleAxisMax = 32767;
-    m_brakeAxisMax = 32767;
-    m_clutchAxisMax = 32767;
-    m_steeringAxisMax = 32767;
-
-    m_throttleAxisMin = -32768;
-    m_brakeAxisMin = -32768;
-    m_clutchAxisMin = -32768;
-    m_steeringAxisMin = -32768;
-
-
     struct uinput_setup device_setup =
     {
         .id = {
             .bustype = BUS_USB,
-            .vendor = 0x3,
-            .product = 0x3,
-            .version = 2,
+            .vendor = 0x420,
+            .product = 0x69,
+            .version = 1,
         },
-        .name = "Drivelink Userspace Joystick"
+        .name = "Drivelink Controller"
     };
 
     if (ioctl(m_fd, UI_DEV_SETUP, &device_setup)) {
