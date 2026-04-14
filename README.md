@@ -1,6 +1,6 @@
 # DriveLink Desktop
 
-**DriveLink Desktop** is the bridge application that allows you to use your Android phone as a high-performance racing game controller for Windows. It receives real-time motion and touch data from the DriveLink mobile app via UDP and translates it into virtual gamepad inputs. 
+**DriveLink Desktop** is the bridge application that allows you to use your Android phone as a high-performance racing game controller for Windows/Linux. It receives real-time motion and touch data from the DriveLink mobile app via UDP and translates it into virtual gamepad inputs. 
 
 ---
 
