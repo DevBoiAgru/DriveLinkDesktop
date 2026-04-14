@@ -30,13 +30,20 @@ DriveLink Desktop acts as a "Bridge" in the system:
 - **Local Network**: Phone and PC must be on the same WiFi network.
 
 ## Installation
+### Windows
 1. **Download DriveLink**: Get the latest binary from the [Releases](https://github.com/DevBoiAgru/DriveLinkDesktop/releases) page.
 2. **Install DriveLink**: Run the installer. It should install the app and vJoy driver automatically.
 **Firewall troubleshooting**: Ensure UDP port `7001` is open in your Windows Firewall for the local network. If there is a dialog that asks for permission to allow access to the network, click **Allow access**.
 
+> [!WARNING]
+> Built binaries which the below section talks about are NOT uploaded yet, they will be available soon.
+### Linux
+1. **Download DriveLink**: Get the latest tar ball from the [Releases](https://github.com/DevBoiAgru/DriveLinkDesktop/releases) page.
+2. Directly run the binary inside, or use the installer script to make the desktop entry automatically.
+
 ## Usage
 1. **Install apps**: Install the Android app on your mobile and Desktop app on your PC.
-2. **Run DriveLink Desktop**: Open the application.
+2. **Run DriveLink Desktop**: Open the application. Instruction for linux users: Make sure to run the app as sudo otherwise it won't start.
 3. **Connect Phone**:
    - Note your PC's local IP address (e.g., `192.168.1.50`).
    - Enter this IP in the settings page in the DriveLink mobile app.
@@ -64,17 +71,7 @@ DriveLink uses a custom binary protocol over UDP for maximum performance.
 DriveLink is built with **C++20** and **SFML 3.0**.
 
 ### Environment Setup
-1. Install **Visual Studio 2022** with "Desktop development with C++".
-2. Install **vcpkg** and integrate it: `vcpkg integrate install`.
-3. Install dependencies: `vcpkg install sfml`.
-4. Open the `.slnx` (or `.vcxproj`) in Visual Studio.
-5. Build for **Release/x64**.
-
-### Project Structure
-- `src/core`: Networking and thread-safe input state.
-- `src/platform`: Windows-specific vJoy implementation.
-- `src/ui`: SFML-based UI components.
-- `include/dl/core/Protocols.hpp`: Definition of the UDP packet format.
+The project uses CMake along and it's fetch content feature to pull the SFML library. Make sure you have all the dependencies to build SFML installed on your system if you use Linux. In case you use windows, the process should be straightforward too.
 
 ### Known issues
 Contributions are very welcome for fixes for these!

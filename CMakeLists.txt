@@ -20,6 +20,9 @@ file(
 
 if(WIN32)
     # Windows specific
+    # Remove the linux platform files
+    list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/dl/platform/linux/linuxGamepad.cpp")
+    list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/dl/platform/linux/PlatformUtils.cpp")
 else()
     # Remove the windows platform files
     list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/dl/platform/windows/PlatformUtils.cpp")
