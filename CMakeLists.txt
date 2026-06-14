@@ -18,13 +18,22 @@ file(
     GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 )
 
+
 if(WIN32)
     # Windows specific
     # Remove the linux platform files
     list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/dl/platform/linux/linuxGamepad.cpp")
     list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/dl/platform/linux/PlatformUtils.cpp")
+    
+    # Get vJoy library
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        # 64 bit system
+        set(VJOY_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/vJoy/lib/x64")
+    else()
+        # 32 bit system
+        set(VJOY_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/vJoy/lib/x86")
+    endif()
 
-    set(VJOY_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/vJoy/x64")
     set(VJOY_LIBRARY "${VJOY_LIB_DIR}/vJoyInterface.lib")
     set(VJOY_DLL "${VJOY_LIB_DIR}/vJoyInterface.dll")
 else()
@@ -35,11 +44,11 @@ endif()
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
-# Assets
-target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/")    # This is useful to get an ASSETS_PATH in your IDE during development but you should comment this if you compile a release version and uncomment the next line
-#target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC ASSETS_PATH="./resources/")                          # Uncomment this line to setup the ASSETS_PATH macro to the final assets directory when you share the project
-
+# Include vJoy headers and link the vJoy dll and lib for windows
 if(WIN32)
+    # Include vJoy headers
+    target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/vJoy/inc")
+
     target_link_libraries(${PROJECT_NAME} PRIVATE "${VJOY_LIBRARY}")
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
@@ -51,7 +60,16 @@ endif()
 target_link_libraries(${PROJECT_NAME} PRIVATE SFML::Graphics)
 target_link_libraries(${PROJECT_NAME} PRIVATE SFML::Network)
 
-target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
+
+# Copy the assets folder next to the executable
+add_custom_command(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_SOURCE_DIR}/assets"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/assets"
+)
 
 # Build commands:
 # cmake -B build

@@ -19,21 +19,21 @@ DriveLinkApp::DriveLinkApp(ResourceManager& resources)
 
     dl::utils::Logger& logger = dl::utils::Logger::GetLogger();
 
-    if (!m_resources.loadFont("font_reg", ASSETS_PATH "fonts/OpenSans-Regular.ttf")) {
+    if (!m_resources.loadFont("font_reg", "./assets/fonts/OpenSans-Regular.ttf")) {
         logger.error("Failed to load regular font OpenSans-Regular.ttf from assets/ directory");
         throw std::runtime_error("Failed to load font - assets/fonts/OpenSans-Regular.ttf");
     }
-    if (!m_resources.loadFont("font_bold", ASSETS_PATH "fonts/OpenSans-SemiBold.ttf")) {
+    if (!m_resources.loadFont("font_bold", "./assets/fonts/OpenSans-SemiBold.ttf")) {
         logger.error("Failed to load bold font OpenSans-SemiBold.ttf from assets/ directory");
         throw std::runtime_error("Failed to load font - assets/fonts/OpenSans-SemiBold.ttf");
     }
-    if (!m_resources.loadTexture("ui_steering", ASSETS_PATH "textures/UI_Steering.png", true)) {
+    if (!m_resources.loadTexture("ui_steering", "./assets/textures/UI_Steering.png", true)) {
         logger.error("Failed to load image UI_Steering.png from assets/textures/ directory");
         throw std::runtime_error("Failed to load font - assets/textures/UI_Steering.png");
     }
 
     m_shadersSupported = sf::Shader::isAvailable();
-    if (m_shadersSupported && !m_resources.loadShader("frag_bgGrad", sf::Shader::Type::Fragment, ASSETS_PATH "shaders/Gradient.frag")) {
+    if (m_shadersSupported && !m_resources.loadShader("frag_bgGrad", sf::Shader::Type::Fragment, "./assets/shaders/Gradient.frag")) {
         logger.warn("Failed to load shader frag_bgGrad, falling back to no shaders.");
         m_shadersSupported = false;
     }

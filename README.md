@@ -65,7 +65,28 @@ DriveLink Desktop acts as a "Bridge" in the system:
 DriveLink is built with **C++20** and **SFML 3.0**.
 
 ### Environment Setup
-The project uses CMake along and it's fetch content feature to pull the SFML library. Make sure you have all the dependencies to build SFML installed on your system if you use Linux. In case you use windows, I use msys2 to setup the toolchain to compile the program.
+The project uses CMake along and it's fetch content feature to pull the SFML library. Make sure you have all the dependencies to build SFML installed on your system if you use Linux. 
+For example on debian, you'd use:
+```
+sudo apt update
+
+sudo apt install \
+    libx11-dev \
+    libxrandr-dev \
+    libxcursor-dev \
+    libxi-dev \
+    libgl1-mesa-dev \
+    libudev-dev \
+    libfreetype-dev \
+    libflac-dev \
+    libvorbis-dev \
+    libogg-dev \
+    libopenal-dev
+```
+
+In case you use other distros, you need to install the dependencies for SFML. Follow this tutorial: https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/
+
+In case you use windows, I use msys2 to setup the toolchain to compile the program.
 
 ### Known issues
 Contributions are very welcome for fixes for these!
