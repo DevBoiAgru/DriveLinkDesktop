@@ -35,7 +35,6 @@ DriveLink Desktop acts as a "Bridge" in the system:
 2. **Install DriveLink**: Run the installer. It should install the app and vJoy driver automatically.
 **Firewall troubleshooting**: Ensure UDP port `7001` is open in your Windows Firewall for the local network. If there is a dialog that asks for permission to allow access to the network, click **Allow access**.
 
-
 ### Linux
 1. **Download DriveLink**: Get the latest tar ball from the [Releases](https://github.com/DevBoiAgru/DriveLinkDesktop/releases) page.
 2. Directly run the binary inside, or use the installer script to make the desktop entry automatically.
@@ -65,7 +64,10 @@ DriveLink Desktop acts as a "Bridge" in the system:
 DriveLink is built with **C++20** and **SFML 3.0**.
 
 ### Environment Setup
-The project uses CMake along and it's fetch content feature to pull the SFML library. Make sure you have all the dependencies to build SFML installed on your system if you use Linux. 
+The project uses CMake along and it's fetch content feature to pull the SFML library. 
+
+#### Linux
+Make sure you have all the dependencies to build SFML installed on your system if you use Linux. 
 For example on debian, you'd use:
 ```
 sudo apt update
@@ -84,9 +86,28 @@ sudo apt install \
     libopenal-dev
 ```
 
-In case you use other distros, you need to install the dependencies for SFML. Follow this tutorial: https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/
+For other distros, you need to install the dependencies for SFML. Follow this tutorial: https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/
 
-In case you use windows, I use msys2 to setup the toolchain to compile the program.
+#### Windows
+
+In case you use windows, I use msys2 to setup the toolchain and compile the program, but since the project uses CMake any IDE should work.
+Tools you'd need:
+CMake and compiler toolchain.
+
+On the MSYS2 UCRT Shell, run: 
+```
+pacman -S \
+  mingw-w64-ucrt-x86_64-gcc \
+  mingw-w64-ucrt-x86_64-cmake \
+  mingw-w64-ucrt-x86_64-ninja
+  ```
+
+and to build the program:
+```
+cd DriveLinkDesktop
+cmake -B build -G "Ninja" -DCMAKE_C_COMPILER=C:/msys64/ucrt64/bin/gcc.exe -DCMAKE_CXX_COMPILER=C:/msys64/ucrt64/bin/g++.exe
+cmake --build build
+```
 
 ### Known issues
 Contributions are very welcome for fixes for these!
