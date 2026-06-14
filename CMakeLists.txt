@@ -18,12 +18,29 @@ file(
     GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 )
 
+set(SOURCES
+    src/main.cpp
+    src/dl/app/DriveLink.cpp
+    src/dl/core/Server.cpp
+    src/dl/input/GamepadFeeder.cpp
+    src/dl/resources/ResourceManager.cpp
+    
+    src/dl/ui/button.cpp
+    src/dl/ui/buttonIndicator.cpp
+    src/dl/ui/cross.cpp
+    src/dl/ui/progress.cpp
+    src/dl/ui/text.cpp
+    
+    src/dl/utility/Logger.cpp
+)
+
 
 if(WIN32)
     # Windows specific
-    # Remove the linux platform files
-    list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/dl/platform/linux/linuxGamepad.cpp")
-    list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/dl/platform/linux/PlatformUtils.cpp")
+    list(APPEND SOURCES
+        src/dl/platform/windows/vJoyGamepad.cpp
+        src/dl/platform/windows/PlatformUtils.cpp
+    )
     
     # Get vJoy library
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -37,12 +54,14 @@ if(WIN32)
     set(VJOY_LIBRARY "${VJOY_LIB_DIR}/vJoyInterface.lib")
     set(VJOY_DLL "${VJOY_LIB_DIR}/vJoyInterface.dll")
 else()
-    # Remove the windows platform files
-    list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/dl/platform/windows/PlatformUtils.cpp")
-    list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/dl/platform/windows/vJoyGamepad.cpp")
+    # Linux specific
+    list(APPEND SOURCES
+        src/dl/platform/linux/PlatformUtils.cpp
+        src/dl/platform/linux/linuxGamepad.cpp
+    )
 endif()
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Include vJoy headers and link the vJoy dll and lib for windows
 if(WIN32)
