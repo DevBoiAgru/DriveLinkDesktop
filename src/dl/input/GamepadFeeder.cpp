@@ -39,4 +39,9 @@ void GamepadFeeder<AxisResT>::updateLoop() {
 }
 
 template class dl::GamepadFeeder<int>;
+
+#ifdef _WIN32
+template class dl::GamepadFeeder<long>;
+#endif
+
 } // namespace dl
