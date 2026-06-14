@@ -90,6 +90,9 @@ For other distros, you need to install the dependencies for SFML. Follow this tu
 
 #### Windows
 
+The project uses vJoy SDK as a dependency, from here: https://github.com/BrunnerInnovation/vJoy and it is bundled with this repo itself in thirdpart/vJoy.
+
+
 In case you use windows, I use msys2 to setup the toolchain and compile the program, but since the project uses CMake any IDE should work.
 Tools you'd need:
 CMake and compiler toolchain.
