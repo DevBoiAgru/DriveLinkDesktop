@@ -16,10 +16,6 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 
-file(
-    GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
-)
-
 set(SOURCES
     src/main.cpp
     src/dl/app/DriveLink.cpp
