@@ -2,14 +2,14 @@
 
 ; BEFORE COMPILING THIS SCRIPT
 ; MAKE SURE:
-;  - You have built the solution in Release mode, this script looks for the
-;    executables in ..\x64\Release directory.
-;  - You have the vJoySetup.exe in ..\x64\ directory. (This should exist -> ..\x64\vJoySetup.exe)
+;  - You have built the project, this script looks for the
+;    executables in ..\build\bin directory.
+;  - You have the vJoySetup.exe in ..\thirdparty\ directory. (This should exist -> ..\thirdparty\vJoySetup.exe)
 
 !include "MUI2.nsh"
 
 Name "DriveLink"
-Icon "..\DriveLinkDesktop\resources\Icon.ico"
+Icon "..\assets\Icon.ico"
 OutFile "DriveLinkSetup.exe"
 InstallDir "$PROGRAMFILES64\DriveLink"
 !define APP_EXE "DriveLinkDesktop.exe"
@@ -29,17 +29,17 @@ RequestExecutionLevel admin
 
 Section
 
-ExecWait 'taskkill /IM ${APP_EXE} /F >nul 2>&1'
+ExecWait '"$SYSDIR\taskkill.exe" /IM ${APP_EXE} /F'
 
 SetOutPath "$INSTDIR"
 
-File /r /x *.pdb /x *.obj /x *.ilk /x *.txt "..\x64\Release\*"
+File /r /x *.pdb /x *.obj /x *.ilk /x *.txt "..\build\bin\*"
 
 ReadRegStr $0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\vJoy" "DisplayName"
 StrCmp $0 "" install_vjoy skip_vjoy
 
 install_vjoy:
-File "/oname=$TEMP\vJoySetup.exe" "..\x64\vJoySetup.exe"
+File "/oname=$TEMP\vJoySetup.exe" "..\thirdparty\vJoySetup.exe"
 ExecWait '"$TEMP\vJoySetup.exe" /SILENT'
 Delete "$TEMP\vJoySetup.exe"
 
