@@ -102,6 +102,21 @@ add_custom_command(
         "${CMAKE_CURRENT_SOURCE_DIR}/assets"
         "$<TARGET_FILE_DIR:${PROJECT_NAME}>/assets"
 )
+if (NOT WIN32)
+    # Write the linux shell installer script
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/installer/linuxInstaller.sh.in
+        ${CMAKE_BINARY_DIR}/install.sh
+        @ONLY
+    )
+
+    add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_BINARY_DIR}/install.sh
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>/install.sh
+    )
+endif()
 
 # Build commands:
 # cmake -B build

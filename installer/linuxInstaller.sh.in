@@ -1,0 +1,52 @@
+#!/bin/bash
+
+set -e
+
+APP_NAME="DriveLink"
+APP_BINARY="DriveLinkDesktop"
+INSTALL_DIR="/opt/$APP_NAME"
+
+echo "Installing $APP_NAME in /opt directory"
+
+# Require root
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run with sudo:"
+    echo "sudo ./install.sh"
+    exit 1
+fi
+
+# Check if pkexec is installed
+if ! command -v pkexec >/dev/null 2>&1; then
+    echo "Error: pkexec is not installed. Install it and re-run the installer"
+    exit 1
+fi
+
+# Create install directory
+mkdir -p "$INSTALL_DIR"
+
+# Copy files
+cp "$APP_BINARY" "$INSTALL_DIR/"
+cp -r assets "$INSTALL_DIR/" 2>/dev/null || true
+
+# Make executable
+chmod +x "$INSTALL_DIR/$APP_BINARY"
+
+
+# Create desktop entry
+cat > "/usr/share/applications/${APP_BINARY}.desktop" << EOF
+[Desktop Entry]
+Version=@PROJECT_VERSION@
+Type=Application
+Name=$APP_NAME
+Exec=pkexec $INSTALL_DIR/$APP_BINARY
+Icon=$INSTALL_DIR/assets/Icon.png
+Terminal=false
+Categories=Utility;
+EOF
+
+chmod 644 "/usr/share/applications/${APP_BINARY}.desktop"
+
+echo
+echo "$APP_NAME installed successfully."
+echo "You can launch it from the applications menu or by running:"
+echo "$APP_BINARY"
