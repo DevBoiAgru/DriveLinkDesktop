@@ -4,7 +4,7 @@
 
 ---
 
-![A screenshot of the program interface](screenshots/interface.png)
+![A screenshot of the program interface](assets/screenshots/interface.png)
 
 ---
 
@@ -25,9 +25,9 @@ DriveLink Desktop acts as a "Bridge" in the system:
 5. **Game Reception** : Your game (BeamNG.drive, Assetto Corsa, etc.) sees the phone as a standard Steering Wheel/Gamepad.
 
 ## Requirements
-- **OS**: Windows 10/11 (64-bit).
-- **Visual C++ Redistrubutables**: [Download here](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
+- **OS**: Windows 10/11 (64-bit) or a supported Linux distribution.
 - **Local Network**: Phone and PC must be on the same WiFi network.
+- **Visual C++ Redistrubutables**: [Download here](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
 
 ## Installation
 ### Windows
@@ -35,8 +35,7 @@ DriveLink Desktop acts as a "Bridge" in the system:
 2. **Install DriveLink**: Run the installer. It should install the app and vJoy driver automatically.
 **Firewall troubleshooting**: Ensure UDP port `7001` is open in your Windows Firewall for the local network. If there is a dialog that asks for permission to allow access to the network, click **Allow access**.
 
-> [!WARNING]
-> Built binaries which the below section talks about are NOT uploaded yet, they will be available soon.
+
 ### Linux
 1. **Download DriveLink**: Get the latest tar ball from the [Releases](https://github.com/DevBoiAgru/DriveLinkDesktop/releases) page.
 2. Directly run the binary inside, or use the installer script to make the desktop entry automatically.
@@ -49,29 +48,24 @@ DriveLink Desktop acts as a "Bridge" in the system:
    - Enter this IP in the settings page in the DriveLink mobile app.
    - Go back to the home screen on the mobile app.
 4. **Verification**: You should see the steering wheel and pedal indicators move in the Desktop UI.
-5. **Game Setup**: Open your racing game and map the axes (Steering, Throttle, etc.) and the buttons to the actions of your choice.
+5. **Game Setup**: Open your racing game and map the axes (Steering, Throttle, etc.) and the buttons to the actions of your choice in the settings if you need.
 
-## How It Works (Technical)
-DriveLink uses a custom binary protocol over UDP for maximum performance.
-- **Packet Parsing**: The application parses packets containing floats for axes and a bitmask for buttons.
-- **Scaling**: Phone rotation in radians (-π/2 to π/2) is mapped linearly to the virtual gamepad absolute axis range.
-- **Thread Safety**: Networking is handled on a dedicated thread to ensure the UI remains responsive and the feeding loop (100Hz) stays consistent.
 
 ## Troubleshooting
 - **No connection (Red Dot)**: 
   - Verify phone and PC are on the same WiFi.
   - Double-check the PC's IP address.
-  - Disable Windows Firewall temporarily to test.
+  - Disable the Firewall temporarily to test.
 - **The code execution cannot proceed because `dllname.dll` was not found. Reinstalling the program may fix this problem.**
   - Download and install Visual C++ Redistributables from [here.](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
 - **Not sure what the issue is?**
-  - Check the log file, by default in the install location `log.txt`. It saves the logs of the last time the program ran. Overwritten everytime program starts.
+  - Check the log file, by default in the install location `log.txt`. It saves the logs of the last time the program ran. Warning: It is overwritten everytime program starts.
 
 ## Contributing / Building from Source
 DriveLink is built with **C++20** and **SFML 3.0**.
 
 ### Environment Setup
-The project uses CMake along and it's fetch content feature to pull the SFML library. Make sure you have all the dependencies to build SFML installed on your system if you use Linux. In case you use windows, the process should be straightforward too.
+The project uses CMake along and it's fetch content feature to pull the SFML library. Make sure you have all the dependencies to build SFML installed on your system if you use Linux. In case you use windows, I use msys2 to setup the toolchain to compile the program.
 
 ### Known issues
 Contributions are very welcome for fixes for these!

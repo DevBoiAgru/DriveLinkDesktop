@@ -23,6 +23,10 @@ if(WIN32)
     # Remove the linux platform files
     list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/dl/platform/linux/linuxGamepad.cpp")
     list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/dl/platform/linux/PlatformUtils.cpp")
+
+    set(VJOY_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/vJoy/x64")
+    set(VJOY_LIBRARY "${VJOY_LIB_DIR}/vJoyInterface.lib")
+    set(VJOY_DLL "${VJOY_LIB_DIR}/vJoyInterface.dll")
 else()
     # Remove the windows platform files
     list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/dl/platform/windows/PlatformUtils.cpp")
@@ -34,6 +38,15 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 # Assets
 target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/")    # This is useful to get an ASSETS_PATH in your IDE during development but you should comment this if you compile a release version and uncomment the next line
 #target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC ASSETS_PATH="./resources/")                          # Uncomment this line to setup the ASSETS_PATH macro to the final assets directory when you share the project
+
+if(WIN32)
+    target_link_libraries(${PROJECT_NAME} PRIVATE "${VJOY_LIBRARY}")
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${VJOY_DLL}"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
+    )
+endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE SFML::Graphics)
 target_link_libraries(${PROJECT_NAME} PRIVATE SFML::Network)
