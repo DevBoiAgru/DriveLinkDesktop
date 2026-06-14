@@ -61,7 +61,11 @@ else()
     )
 endif()
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+if(WIN32)
+    add_executable(${PROJECT_NAME} WIN32 ${SOURCES})
+else()
+    add_executable(${PROJECT_NAME} ${SOURCES})
+endif()
 
 # Include vJoy headers and link the vJoy dll and lib for windows
 if(WIN32)
@@ -69,6 +73,8 @@ if(WIN32)
     target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/vJoy/inc")
 
     target_link_libraries(${PROJECT_NAME} PRIVATE "${VJOY_LIBRARY}")
+
+    # Copy the vJoy dll next to the exe
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${VJOY_DLL}"
