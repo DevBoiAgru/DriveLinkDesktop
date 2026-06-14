@@ -72,11 +72,11 @@ LinuxGamepad::LinuxGamepad() {
         abs.absinfo.fuzz = 0;
 
         switch (axis) {
-        case ABS_X:
+        case ABS_RZ:
             abs.absinfo.minimum = m_throttleAxisMin;
             abs.absinfo.maximum = m_throttleAxisMax;
             break;
-        case ABS_Y:
+        case ABS_Z:
             abs.absinfo.minimum = m_brakeAxisMin;
             abs.absinfo.maximum = m_brakeAxisMax;
             break;
@@ -84,7 +84,7 @@ LinuxGamepad::LinuxGamepad() {
             abs.absinfo.minimum = m_clutchAxisMin;
             abs.absinfo.maximum = m_clutchAxisMax;
             break;
-        case ABS_RY:
+        case ABS_X:
             abs.absinfo.minimum = m_steeringAxisMin;
             abs.absinfo.maximum = m_steeringAxisMax;
             break;
@@ -103,7 +103,7 @@ LinuxGamepad::LinuxGamepad() {
             .product = 0x69,
             .version = 1,
         },
-        .name = "Drivelink Controller"
+        .name = "Drivelink Virtual Controller"
     };
 
     if (ioctl(m_fd, UI_DEV_SETUP, &device_setup)) {

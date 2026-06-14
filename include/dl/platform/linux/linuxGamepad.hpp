@@ -20,8 +20,8 @@ public:
 private:
     int m_fd;
 
-    unsigned short m_axes[4] = { ABS_X, ABS_Y, ABS_RX, ABS_RY };
-    unsigned short m_buttons[8] = { BTN_A, BTN_B, BTN_X, BTN_Y, BTN_TL, BTN_TR, BTN_TL2, BTN_TR2 };
+    unsigned short m_axes[4] = { ABS_X /* Steering */ , ABS_RZ /* Throttle */, ABS_Z /* Brake */ , ABS_RX /* Clutch */ };
+    unsigned short m_buttons[8] = { BTN_TR /* Shift Up */, BTN_TL /* Shift Down */, BTN_A, BTN_B, BTN_X, BTN_Y, BTN_THUMBL, BTN_THUMBR };
 
     struct input_event m_ev[8 + 4 + 1] = {};     // 8 buttons + 4 axes + 1 sync event
 
