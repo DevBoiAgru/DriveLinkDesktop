@@ -1,0 +1,29 @@
+/* This file is used by windows to add details like icon and version with the executable. */
+
+#include <winver.h>
+
+
+IDI_APP_ICON ICON "@ICON_PATH@"
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION @PROJECT_VERSION_MAJOR@,@PROJECT_VERSION_MINOR@,@PROJECT_VERSION_PATCH@,0
+ PRODUCTVERSION @PROJECT_VERSION_MAJOR@,@PROJECT_VERSION_MINOR@,@PROJECT_VERSION_PATCH@,0
+
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName", "DevBoiAgru"
+            VALUE "FileDescription", "Executable for DriveLink Desktop bridge"
+            VALUE "FileVersion", "@PROJECT_VERSION@"
+            VALUE "ProductName", "DriveLink Desktop"
+            VALUE "ProductVersion", "@PROJECT_VERSION@"
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 1252
+    END
+END

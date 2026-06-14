@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.13)
-project(DriveLinkDesktop)
+project(DriveLinkDesktop VERSION 0.2.1)
 set(CMAKE_CXX_STANDARD 20)
+
+set(ICON_PATH "${CMAKE_SOURCE_DIR}/assets/Icon.ico")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
@@ -62,7 +64,12 @@ else()
 endif()
 
 if(WIN32)
-    add_executable(${PROJECT_NAME} WIN32 ${SOURCES})
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/app.rc.in
+        ${CMAKE_BINARY_DIR}/app.rc
+        @ONLY
+    )
+    add_executable(${PROJECT_NAME} WIN32 ${CMAKE_BINARY_DIR}/app.rc ${SOURCES})
 else()
     add_executable(${PROJECT_NAME} ${SOURCES})
 endif()
