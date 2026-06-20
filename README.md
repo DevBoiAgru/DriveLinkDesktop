@@ -25,9 +25,9 @@ DriveLink Desktop acts as a "Bridge" in the system:
 5. **Game Reception** : Your game (BeamNG.drive, Assetto Corsa, etc.) sees the phone as a standard Steering Wheel/Gamepad.
 
 ## Requirements
-- **OS**: Windows 10/11 (64-bit) or a supported Linux distribution.
+- **OS**: Windows 10/11 (amd64) or a supported Linux distribution (amd64). Other architectures might be supported but you'll need to build the project yourselves.
 - **Local Network**: Phone and PC must be on the same WiFi network.
-- **Visual C++ Redistrubutables**: [Download here](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
+
 
 ## Installation
 ### Windows
@@ -55,8 +55,7 @@ DriveLink Desktop acts as a "Bridge" in the system:
   - Verify phone and PC are on the same WiFi.
   - Double-check the PC's IP address.
   - Disable the Firewall temporarily to test.
-- **The code execution cannot proceed because `dllname.dll` was not found. Reinstalling the program may fix this problem.**
-  - Download and install Visual C++ Redistributables from [here.](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
+
 - **Not sure what the issue is?**
   - Check the log file, by default in the install location `log.txt`. It saves the logs of the last time the program ran. Warning: It is overwritten everytime program starts.
 
