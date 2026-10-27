@@ -99,9 +99,9 @@ LinuxGamepad::LinuxGamepad() {
     {
         .id = {
             .bustype = BUS_USB,
-            .vendor = 0x420,
-            .product = 0x69,
-            .version = 1,
+            .vendor = 0x45e,
+            .product = 0x28e,
+            .version = 0x110,
         },
         .name = "Drivelink Virtual Controller"
     };
