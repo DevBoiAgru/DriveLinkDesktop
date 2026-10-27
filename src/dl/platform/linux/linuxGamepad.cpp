@@ -4,7 +4,7 @@
 #include <iostream>
 #include <bitset>
 #include <cmath>
-
+#include <unistd.h>
 
 namespace dl {
 
